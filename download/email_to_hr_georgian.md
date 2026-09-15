@@ -22,7 +22,7 @@ I spent approximately thirty minutes auditing the live site. The findings are as
 
 ### 2.1 The site is live and serving real traffic while still under development
 
-The site is publicly accessible at production URL with no staging environment, no preview deployment, and no access control. HTTP response on 15 September 2026:
+The site is publicly accessible at production URL with no staging environment, no preview deployment, and no access control. This poses a significant security risk. HTTP response on 15 September 2026:
 
 ```
 HTTP/1.1 200 OK
@@ -89,7 +89,7 @@ WordPress development as a discipline is not aligned with my professional skills
 
 4. **Total cost of ownership is higher, not lower.** A WordPress site looks cheap to stand up, but the long-term cost — plugin subscriptions, security patching, recovery from incidents, developer onboarding for a stack that has no version control — is materially higher than a properly built custom application. I would be doing the company a disservice to pretend otherwise.
 
-For context on what I am building day-to-day in the tool stack I do work in: I began developing https://pitchcoachai.tech/ over the weekend out of a personal interest in integrating chatbots and AI agents into platforms. It is an AI pitch-coaching application built on Next.js, deployed on Vercel, with Clerk for authentication and Z.ai / Gemini for the language model layer. It is still in active development — the security layer does not yet let users past the sign-up page — but it is a small, representative example of the kind of platform I am equipped to ship, and the kind of platform I believe Ruhe Global Resources should be building in 2026.
+For context on what I am building day-to-day in the tool stack I do work in: I began developing https://pitchcoachai.tech/ over the weekend out of a personal interest in integrating chatbots and AI agents into platforms. It is an AI pitch-coaching application built on Next.js, deployed on Vercel, with Clerk for authentication and Z.ai / Gemini for the language model layer. It is still in active development — the security layer does not yet let users past the sign-up page — but it is a small, representative example of the kind of platform I am equipped to ship, and this is the standard in 2026.
 
 ## 4. What I am asking for
 
