@@ -6,15 +6,15 @@
 
 Dear Mrs Georgian,
 
-I'm writing to formally document findings from the technical audit I conducted on the Accommodation Finders website (https://accommodationfinders.co.uk/) which was handed to me earlier this week, and to request a conversation about how my role aligns with what was agreed during my interview with Mr Joseph.
+I'm writing to formally document findings from the technical audit I conducted on the Accommodation Finders website (https://accommodationfinders.co.uk/) which was handed to me today, and to request a conversation about how my role aligns with what was agreed during my interview with Mr Joseph.
 
 ## 1. Context — what was agreed at interview
 
-During my interview with Mr Joseph, I was asked to propose a solution for the current company website at https://ruhegr.com/. My recommendation was clear and is on record: build a fast, modern, responsive web platform using Next.js, with source control on GitHub and deployment via Vercel. That recommendation was accepted as the direction of travel, and it formed the basis of my joining Ruhe Global Resources.
+During my interview with Mr Joseph, I was asked to propose a solution for the current company website at https://ruhegr.com/. My recommendation was clear and is on record: build a **modern, fast and responsive** web platform using Next.js, with source control on GitHub and deployment via Vercel. That recommendation was accepted as the direction of travel, and it formed the basis of my joining Ruhe Global Resources.
 
 To date — one and a half weeks in — I have not been assigned to that work. I have instead been producing social media content, which I have gladly done and will continue to do, given my background in AI-assisted video generation. However, I understand that another developer, Ifeanyi, has since been brought onboard and is now executing the Next.js build I had originally scoped with Mr Joseph. I have no issue with Ifeanyi personally; I simply wish to flag the inconsistency.
 
-Three days ago, I was instead handed a WordPress install (https://accommodationfinders.co.uk/) to develop further. I want to be transparent: this is not work I am able to take on, and the reasons are technical, not preferential. I have documented them below.
+Today, I was instead handed a WordPress install (https://accommodationfinders.co.uk/) to develop further. I was left a little bit disappointed when I inquired if I could begin developing the website with my preferred tool stack and was met with a rejection. I want to be transparent: this is not work I am able to take on, and the reasons are technical, not preferential. I have documented them below.
 
 ## 2. Findings from the audit of accommodationfinders.co.uk
 
@@ -31,7 +31,7 @@ X-Powered-By: PHP/8.4.25
 Host: wghp5.wghservers.com (Secured Servers LLC, Virginia, US)
 ```
 
-This is the single most important finding. A site that is under active development should not be receiving real production traffic. Standard practice is to develop against a local or staging environment, deploy to a preview URL for review, and only promote to production once content, performance and security have been signed off. The current arrangement exposes unfinished work, internal structure and plugin fingerprints to the public — including potential attackers — throughout the entire development cycle.
+This is the single most important finding. **A site that is under active development should not be receiving real production traffic.** Standard practice is to develop against a local or staging environment, deploy to a preview URL for review, and only promote to production once content, performance and security have been signed off. The current arrangement exposes unfinished work, internal structure and plugin fingerprints to the public — including potential attackers — throughout the entire development cycle.
 
 ### 2.2 No version control, no CI/CD, no preview pipeline
 
@@ -83,13 +83,13 @@ WordPress development as a discipline is not aligned with my professional skills
 
 1. **It is not what I was hired to do.** The brief at interview was Next.js + GitHub + Vercel. I have not deviated from that brief; the project has.
 
-2. **The toolchain does not support the engineering practices I consider non-negotiable** — typed code, version control, automated testing, preview environments, atomic deployments, observability. WordPress as a platform does not provide these by default and retrofitting them is more work than rebuilding.
+2. **The toolchain does not support the engineering practices I consider non-negotiable** — typed code, AI-assisted development, version control, automated testing, preview environments, atomic deployments, observability. WordPress as a platform does not provide these by default and retrofitting them is more work than rebuilding.
 
 3. **It is not the right tool for a booking platform handling personal data and payments.** The free MotoPress hotel plugin being used here is not designed for the regulatory and security requirements of UK student accommodation. A custom Next.js application with a properly typed backend gives the business control over data handling, audit logging, and compliance posture — which WordPress-with-plugins does not.
 
 4. **Total cost of ownership is higher, not lower.** A WordPress site looks cheap to stand up, but the long-term cost — plugin subscriptions, security patching, recovery from incidents, developer onboarding for a stack that has no version control — is materially higher than a properly built custom application. I would be doing the company a disservice to pretend otherwise.
 
-For context on what I am building day-to-day in the tool stack I do work in: https://pitchcoachai.tech/ is an AI pitch-coaching application built on Next.js, deployed on Vercel, with Clerk for authentication and Z.ai / Gemini for the language model layer. It is a small but representative example of the kind of platform I am equipped to ship, and the kind of platform I believe Ruhe Global Resources should be building in 2026.
+For context on what I am building day-to-day in the tool stack I do work in: I began developing https://pitchcoachai.tech/ over the weekend out of a personal interest in integrating chatbots and AI agents into platforms. It is an AI pitch-coaching application built on Next.js, deployed on Vercel, with Clerk for authentication and Z.ai / Gemini for the language model layer. It is still in active development — the security layer does not yet let users past the sign-up page — but it is a small, representative example of the kind of platform I am equipped to ship, and the kind of platform I believe Ruhe Global Resources should be building in 2026.
 
 ## 4. What I am asking for
 
@@ -97,7 +97,7 @@ I am not asking to be relieved of duties. I am asking for clarity on the followi
 
 1. Is the Accommodation Finders project being handed to me to develop? If so, I would like to discuss whether a rebuild in the originally agreed stack is possible, rather than continuing to extend the current WordPress install.
 2. If not, what is the intended scope of my role for the remainder of my probation? I am happy to continue content work in the interim, but I would like it on record that this is not the work I was hired to do.
-3. Is there an opportunity for me to contribute to the Next.js work that Ifeanyi is leading? I would prefer collaboration over displacement.
+3. If there are other web development opportunities within the company, or within partner and client relations, I would gladly take these on — as a caveat, it was clearly stated in the job description and offer letter I received from the organisation that this kind of work falls within my remit. I would also welcome the opportunity to contribute to the Next.js work that Ifeanyi is leading; I would prefer collaboration over displacement.
 
 I came to Ruhe Global Resources to be challenged and to do serious work. I am confident I can deliver against the original brief, and I would welcome the opportunity to do so. I am available to walk through any of the technical points above at your convenience.
 
