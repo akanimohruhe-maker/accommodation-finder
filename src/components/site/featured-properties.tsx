@@ -230,7 +230,17 @@ export function FeaturedProperties() {
                 </div>
                 <button
                   type="button"
-                  className="rounded-full bg-brand text-brand-foreground px-3.5 py-2 text-[12.5px] font-medium hover:bg-brand-soft transition-colors"
+                  className="rounded-full px-3.5 py-2 text-[12.5px] font-medium transition-colors"
+                  style={{
+                    backgroundColor: "#FF8C00",
+                    color: "#1A1407",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = "#FFB700";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = "#FF8C00";
+                  }}
                 >
                   View details
                 </button>

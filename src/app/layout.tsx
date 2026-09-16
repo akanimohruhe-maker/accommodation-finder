@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Bricolage_Grotesque, Space_Grotesk } from "next/font/google";
+import { Inter, Bricolage_Grotesque, Space_Grotesk, Amarante } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -22,6 +22,13 @@ const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   display: "swap",
   weight: ["400", "500", "600", "700"],
+});
+
+const amarante = Amarante({
+  variable: "--font-amarante",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400"],
 });
 
 export const metadata: Metadata = {
@@ -60,7 +67,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${bricolage.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground`}
+        className={`${inter.variable} ${bricolage.variable} ${spaceGrotesk.variable} ${amarante.variable} antialiased bg-background text-foreground`}
       >
         {children}
         <Toaster />

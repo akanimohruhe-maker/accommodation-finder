@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
+import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 import { Logo } from "@/components/site/logo";
+import { EnvelopeMark, PhoneMark, LocationMark } from "@/components/site/contact-marks";
 
 const quickLinks = [
   { label: "Find Accommodation", href: "/find-accommodation" },
@@ -74,15 +75,15 @@ export function Footer() {
             {/* Contact rows */}
             <div className="mt-6 space-y-2.5 text-[13.5px] text-white/75">
               <p className="flex items-center gap-2.5">
-                <Mail className="h-4 w-4 text-accent" />
+                <EnvelopeMark className="h-5 w-5 shrink-0" />
                 hello@accommodationfinders.co.uk
               </p>
               <p className="flex items-center gap-2.5">
-                <Phone className="h-4 w-4 text-accent" />
+                <PhoneMark className="h-5 w-5 shrink-0" />
                 +44 (0) 20 1234 5678
               </p>
               <p className="flex items-center gap-2.5">
-                <MapPin className="h-4 w-4 text-accent" />
+                <LocationMark className="h-5 w-5 shrink-0" />
                 London · Manchester · Birmingham
               </p>
             </div>

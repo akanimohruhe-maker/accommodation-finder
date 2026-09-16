@@ -53,21 +53,24 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <div className="ml-2 flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-ink-soft hover:text-ink"
-              >
-                Sign in
-              </Button>
+            <div className="ml-2 relative group">
               <Button
                 size="sm"
                 className="bg-brand text-brand-foreground hover:bg-brand-soft rounded-full px-4"
               >
                 Get started
-                <ChevronDown className="ml-1 h-3.5 w-3.5" />
+                <ChevronDown className="ml-1 h-3.5 w-3.5 transition-transform group-hover:rotate-180" />
               </Button>
+              {/* Hover-revealed Sign in button */}
+              <div className="absolute top-full right-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 -translate-y-1 group-hover:translate-y-0">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="bg-bg-elevated text-ink-soft border-line hover:text-ink hover:border-brand/30 rounded-full px-4 shadow-[0_8px_24px_-8px_rgba(15,23,42,0.25)] whitespace-nowrap w-full"
+                >
+                  Sign in
+                </Button>
+              </div>
             </div>
           </div>
 
