@@ -1,6 +1,6 @@
 "use client";
 
-const heroImage = "/images/hero.jpg";
+const heroImage = "/images/hero-london-night.jpg";
 
 /** Split a string into letter spans for staggered color-cycle animation. */
 function AnimatedText({ text }: { text: string }) {
@@ -28,7 +28,7 @@ export function Hero() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={heroImage}
-          alt="London cityscape at dusk"
+          alt="London cityscape at night"
           className="h-full w-full object-cover"
           loading="eager"
         />
@@ -45,9 +45,9 @@ export function Hero() {
               <AnimatedText text="Find your perfect" />
             </span>
             <span className="block mt-2 lg:mt-4">
-              <AnimatedText text="accommodation." />
+              <AnimatedText text="Accommodation" />
             </span>
-            <span className="sr-only">Find your perfect accommodation.</span>
+            <span className="sr-only">Find your perfect Accommodation</span>
           </h1>
 
           {/* Subhead */}

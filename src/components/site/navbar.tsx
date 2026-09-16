@@ -38,21 +38,30 @@ export function Navbar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <nav className="flex h-16 lg:h-20 items-center justify-between">
           {/* Brand */}
-          <Link href="/" className="flex items-center">
-            <Logo variant={scrolled ? "dark" : "light"} className="h-9" />
+          <Link href="/" className="flex items-center group/logo">
+            <div className="transition-transform duration-300 group-hover/logo:animate-[logoPulse_1.4s_ease-in-out_infinite]">
+              <Logo variant={scrolled ? "dark" : "light"} className="h-9" />
+            </div>
           </Link>
 
           {/* Desktop nav */}
           <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="px-3.5 py-2 text-[14px] font-medium text-ink-soft hover:text-ink transition-colors rounded-lg hover:bg-line-soft"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isAccentLink = link.label === "Cities" || link.label === "Contact";
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`px-3.5 py-2 text-[14px] font-medium text-ink-soft transition-colors rounded-lg hover:bg-line-soft ${
+                    isAccentLink
+                      ? "hover:text-[#FF8C00]"
+                      : "hover:text-ink"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
             <div className="ml-2 relative group">
               <Button
                 size="sm"

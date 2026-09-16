@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
@@ -81,12 +83,12 @@ export function CitiesGrid() {
           className="group relative block w-full overflow-hidden rounded-3xl mb-6"
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[380px] lg:min-h-[460px]">
-            {/* Image */}
+            {/* Image — uses the real uploaded London photo */}
             <div className="relative overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={`/images/cities/london-${cities[0].period}.jpg`}
-                alt={`${cities[0].name} at ${cities[0].period}`}
+                src="/images/city-london-real.jpg"
+                alt="London cityscape"
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-transparent to-bg-elevated/10 lg:to-bg-elevated" />
@@ -116,16 +118,29 @@ export function CitiesGrid() {
                     From <span className="text-ink font-semibold">{cities[0].from}</span>
                   </p>
                 </div>
-                <div className="inline-flex items-center gap-1.5 rounded-full bg-brand text-brand-foreground px-4 py-2.5 text-[13px] font-medium hover:bg-brand-soft transition-colors">
+                {/* Explore London button — brand alternate colour (orange) */}
+                <span
+                  className="inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-[13px] font-medium transition-colors"
+                  style={{
+                    backgroundColor: "#FF8C00",
+                    color: "#1A1407",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = "#FFB700";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = "#FF8C00";
+                  }}
+                >
                   Explore {cities[0].name}
                   <ArrowUpRight className="h-3.5 w-3.5" />
-                </div>
+                </span>
               </div>
             </div>
           </div>
         </Link>
 
-        {/* Other 4 cities — 2×2 / 4-col grid */}
+        {/* Other 4 cities — 2×2 / 4-col grid (listings badges REMOVED) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {cities.slice(1).map((city) => (
             <Link
@@ -141,10 +156,10 @@ export function CitiesGrid() {
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
-                <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between text-white">
-                  <span className="font-display font-semibold text-[22px]">{city.name}</span>
-                  <span className="rounded-full bg-white/15 backdrop-blur-md px-2.5 py-1 text-[11px] font-medium">
-                    {city.properties} listings
+                {/* Only the city name on the image — NO listings badge */}
+                <div className="absolute bottom-3 left-3 right-3">
+                  <span className="font-display font-semibold text-[22px] text-white">
+                    {city.name}
                   </span>
                 </div>
               </div>

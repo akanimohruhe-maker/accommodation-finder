@@ -168,3 +168,72 @@
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ============================================================
+   Logo pulse — plays on hover of the brand mark in navbar
+   ============================================================ */
+@keyframes logoPulse {
+  0%,   100% { transform: scale(1); }
+  50%        { transform: scale(1.06); }
+}
+
+/* ============================================================
+   Bespoke icon hover animations — 5 distinct, minimalist, aligned.
+   Each icon container gets .icon-anim-X class; the SVG inside
+   animates when the parent .group is hovered.
+   ============================================================ */
+
+/* 1. Shield-check — soft clockwise tilt + slight scale */
+@keyframes iconTilt {
+  0%,   100% { transform: rotate(0deg) scale(1); }
+  25%        { transform: rotate(-6deg) scale(1.08); }
+  75%        { transform: rotate(6deg) scale(1.08); }
+}
+.group:hover .icon-anim-tilt { animation: iconTilt 1.6s ease-in-out infinite; }
+
+/* 2. Padlock — gentle shackle shake (small lateral wiggle) */
+@keyframes iconWiggle {
+  0%,   100% { transform: rotate(0deg); }
+  20%       { transform: rotate(-3deg); }
+  40%       { transform: rotate(3deg); }
+  60%       { transform: rotate(-2deg); }
+  80%       { transform: rotate(2deg); }
+}
+.group:hover .icon-anim-wiggle { animation: iconWiggle 1.2s ease-in-out infinite; }
+
+/* 3. Coin-house — slow rotate around its center (like a coin spin) */
+@keyframes iconSpin {
+  0%        { transform: rotateY(0deg); }
+  100%      { transform: rotateY(360deg); }
+}
+.group:hover .icon-anim-spin {
+  animation: iconSpin 1.8s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+/* 4. Graduation cap — gentle bounce (vertical bob) */
+@keyframes iconBounce {
+  0%,   100% { transform: translateY(0); }
+  40%       { transform: translateY(-4px); }
+  60%       { transform: translateY(-4px); }
+}
+.group:hover .icon-anim-bounce { animation: iconBounce 1.4s ease-in-out infinite; }
+
+/* 5. Clock-bubble — tick-tock rotation, like a clock hand swinging */
+@keyframes iconTick {
+  0%,   100% { transform: rotate(0deg); }
+  25%       { transform: rotate(-12deg); }
+  50%       { transform: rotate(0deg); }
+  75%       { transform: rotate(12deg); }
+}
+.group:hover .icon-anim-tick { animation: iconTick 1.5s ease-in-out infinite; }
+
+/* Apply transform-origin consistently so all animations feel aligned */
+.icon-anim-tilt,
+.icon-anim-wiggle,
+.icon-anim-spin,
+.icon-anim-bounce,
+.icon-anim-tick {
+  transform-origin: 50% 50%;
+  display: block;
+}
