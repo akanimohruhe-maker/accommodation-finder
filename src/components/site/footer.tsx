@@ -66,7 +66,7 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 lg:gap-10">
           {/* Brand column */}
           <div className="col-span-2 lg:col-span-2 max-w-sm">
-            <Logo variant="light" showTagline />
+            <Logo variant="light" size={48} />
             <p className="mt-5 text-[14px] text-white/60 leading-relaxed">
               Providing accommodations that suit your budget. Viewings, lease
               agreements, roommate matching and moving-in support, all under one roof.

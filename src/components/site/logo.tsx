@@ -3,52 +3,47 @@ import { cn } from "@/lib/utils";
 type LogoVariant = "light" | "dark";
 
 type LogoProps = {
+  /**
+   * - "light" — pick the logo variant that's readable on a DARK background
+   *   (uses official-logo-light.png: white house + orange sun, transparent bg)
+   * - "dark"  — pick the logo variant that's readable on a LIGHT background
+   *   (uses official-logo-dark.png: black house + orange sun, transparent bg)
+   */
   variant?: LogoVariant;
   className?: string;
-  /** Size of the logo mark in pixels (square) */
   size?: number;
 };
 
 /**
- * Accommodation Finders official logo — uses the brand-supplied PNG asset.
+ * Accommodation Finders official logo — uses the brand-supplied PNG asset
+ * (converted from acc.jpeg to two transparent PNGs by scripts/convert_logo.py).
  *
- * The logo mark depicts a stylised house silhouette with a sun circle behind it,
- * the wordmark reads "Accommodation finders" (cursive "Accommodation" + bold
- * sans-serif "finders").
+ * Two variants exist:
+ *  - official-logo-dark.png  — black house + orange sun, transparent bg  (for light backgrounds)
+ *  - official-logo-light.png — white house + orange sun, transparent bg  (for dark backgrounds)
  *
  * The pulsing animation on hover is applied by the parent (navbar/footer) via
  * the `group/logo` class — see globals.css `@keyframes logoPulse`.
- *
- * Variants:
- *  - "light" — drop-shadow filter so it's readable on dark backgrounds (hero, footer)
- *  - "dark"  — no filter, used on light backgrounds
  */
 export function Logo({
   variant = "dark",
   className,
   size = 44,
 }: LogoProps) {
-  const isLight = variant === "light";
+  const src = variant === "light"
+    ? "/images/official-logo-light.png"
+    : "/images/official-logo-dark.png";
 
   return (
     <span
       className={cn("inline-flex items-center", className)}
-      style={{
-        height: size,
-        // On light backgrounds (nav scrolled), the logo is black + orange — readable as-is.
-        // On dark backgrounds (hero, footer), invert filter flips black to white.
-        filter: isLight
-          ? "invert(1) hue-rotate(180deg) saturate(1.5)"
-          : "none",
-        transition: "filter 200ms ease",
-      }}
+      style={{ height: size }}
     >
       <img
-        src="/images/official-logo.png"
+        src={src}
         alt="Accommodation Finders"
         width={size}
         height={size}
-        // Logo is decorative-textual — the alt text covers screen readers
         // eslint-disable-next-line @next/next/no-img-element
         style={{
           height: size,
