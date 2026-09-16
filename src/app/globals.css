@@ -1,0 +1,144 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   Accommodation Finders — Brand DNA
+   Tokens wired into Tailwind 4 so they work as bg-brand / text-brand / border-line etc.
+   ============================================================ */
+@theme inline {
+  /* Fonts (loaded via next/font in layout.tsx) */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bricolage), "Bricolage Grotesque", ui-sans-serif, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", monospace;
+
+  /* Brand — extracted from existing site */
+  --color-brand: #2E3194;             /* royal navy — primary CTAs, links, focus rings */
+  --color-brand-foreground: #FFFFFF;
+  --color-brand-soft: #4338CA;        /* lighter navy for hovers */
+  --color-accent: #F9B43A;            /* warm gold — highlights, badges */
+  --color-accent-foreground: #1A1407;
+  --color-accent-hot: #FFB700;        /* vivid amber — interactive hovers */
+
+  /* Surfaces — modern neutrals (replacing #333 / #E8E8E8 / #0F0A00) */
+  --color-bg: #FAFAF7;                /* warm off-white paper */
+  --color-bg-elevated: #FFFFFF;        /* cards, surfaces */
+  --color-ink: #0F172A;               /* slate-900 — primary text */
+  --color-ink-soft: #475569;          /* slate-600 — secondary text */
+  --color-ink-muted: #94A3B8;         /* slate-400 — meta */
+  --color-line: #E2E8F0;              /* slate-200 — dividers */
+  --color-line-soft: #F1F5F9;         /* slate-100 — subtle fills */
+
+  /* Semantic */
+  --color-success: #16A34A;
+  --color-warning: #F59E0B;
+  --color-danger: #DC2626;
+
+  /* shadcn aliases (mapped to brand) */
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-ink);
+  --color-card: var(--color-bg-elevated);
+  --color-card-foreground: var(--color-ink);
+  --color-popover: var(--color-bg-elevated);
+  --color-popover-foreground: var(--color-ink);
+  --color-primary: var(--color-brand);
+  --color-primary-foreground: var(--color-brand-foreground);
+  --color-secondary: var(--color-line-soft);
+  --color-secondary-foreground: var(--color-ink);
+  --color-muted: var(--color-line-soft);
+  --color-muted-foreground: var(--color-ink-soft);
+  --color-accent-shadcn: var(--color-line-soft);
+  --color-accent-shadcn-foreground: var(--color-ink);
+  --color-destructive: var(--color-danger);
+  --color-border: var(--color-line);
+  --color-input: var(--color-line);
+  --color-ring: var(--color-brand);
+
+  /* Sidebar (unused on landing, but wired for consistency) */
+  --color-sidebar: var(--color-bg-elevated);
+  --color-sidebar-foreground: var(--color-ink);
+  --color-sidebar-primary: var(--color-brand);
+  --color-sidebar-primary-foreground: var(--color-brand-foreground);
+  --color-sidebar-accent: var(--color-line-soft);
+  --color-sidebar-accent-foreground: var(--color-ink);
+  --color-sidebar-border: var(--color-line);
+  --color-sidebar-ring: var(--color-brand);
+
+  /* Radii */
+  --radius: 0.75rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+}
+
+:root {
+  --background: #FAFAF7;
+  --foreground: #0F172A;
+}
+
+.dark {
+  --background: #0F172A;
+  --foreground: #FAFAF7;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "cv11", "tnum";
+  }
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-accent-foreground);
+  }
+}
+
+/* Custom scrollbar for horizontal rails */
+@layer utilities {
+  .scroll-rail {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scroll-rail::-webkit-scrollbar {
+    display: none;
+  }
+  .scroll-rail-snap {
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 1.5rem;
+  }
+  .scroll-rail-snap > * {
+    scroll-snap-align: start;
+  }
+
+  /* Glass card — used on hero search bar */
+  .glass {
+    background-color: rgb(255 255 255 / 0.85);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  }
+
+  /* Editorial display headline */
+  .headline {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+  }
+
+  /* Subtle fade-up entrance */
+  .fade-up {
+    animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
