@@ -6,44 +6,45 @@ type City = {
   blurb: string;
   properties: number;
   from: string;
-  image: string;
+  /** The "period of day" featured photo */
+  period: "dawn" | "day" | "dusk" | "night";
 };
 
 const cities: City[] = [
   {
     name: "London",
-    blurb: "From Shoreditch to Camden — student lets near every major campus.",
+    blurb: "From Shoreditch to Camden, student lets near every major campus.",
     properties: 412,
     from: "£185/wk",
-    image: "/images/city-london.jpg",
+    period: "dusk",
   },
   {
     name: "Manchester",
     blurb: "Affordable city-centre living minutes from MMU and the University of Manchester.",
     properties: 268,
     from: "£120/wk",
-    image: "/images/city-manchester.jpg",
+    period: "dawn",
   },
   {
     name: "Birmingham",
     blurb: "Modern student towers and shared houses near Aston and UoB.",
     properties: 187,
     from: "£110/wk",
-    image: "/images/city-birmingham.jpg",
+    period: "day",
   },
   {
     name: "Leicester",
     blurb: "Quiet, leafy neighbourhoods a short walk from University of Leicester.",
     properties: 142,
     from: "£95/wk",
-    image: "/images/city-leicester.jpg",
+    period: "night",
   },
   {
     name: "Northampton",
     blurb: "Budget-friendly student housing close to the University of Northampton.",
     properties: 89,
     from: "£85/wk",
-    image: "/images/city-northampton.jpg",
+    period: "dusk",
   },
 ];
 
@@ -66,7 +67,7 @@ export function CitiesGrid() {
             </p>
           </div>
           <Link
-            href="#all-cities"
+            href="/cities"
             className="hidden md:inline-flex items-center gap-1.5 text-[14px] font-medium text-ink-soft hover:text-brand transition-colors whitespace-nowrap"
           >
             View all cities
@@ -76,7 +77,7 @@ export function CitiesGrid() {
 
         {/* Featured city (London) — full-width hero card */}
         <Link
-          href="#"
+          href="/cities"
           className="group relative block w-full overflow-hidden rounded-3xl mb-6"
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[380px] lg:min-h-[460px]">
@@ -84,8 +85,8 @@ export function CitiesGrid() {
             <div className="relative overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={cities[0].image}
-                alt={`${cities[0].name} cityscape`}
+                src={`/images/cities/london-${cities[0].period}.jpg`}
+                alt={`${cities[0].name} at ${cities[0].period}`}
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-transparent to-bg-elevated/10 lg:to-bg-elevated" />
@@ -129,14 +130,14 @@ export function CitiesGrid() {
           {cities.slice(1).map((city) => (
             <Link
               key={city.name}
-              href="#"
+              href="/cities"
               className="group relative overflow-hidden rounded-2xl bg-bg-elevated border border-line hover:border-brand/30 transition-colors"
             >
               <div className="aspect-[4/3] overflow-hidden relative">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={city.image}
-                  alt={`${city.name} cityscape`}
+                  src={`/images/cities/${city.name.toLowerCase()}-${city.period}.jpg`}
+                  alt={`${city.name} at ${city.period}`}
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />

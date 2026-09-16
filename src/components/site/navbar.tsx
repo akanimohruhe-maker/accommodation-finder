@@ -6,11 +6,13 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+import { Logo } from "@/components/site/logo";
+
 const navLinks = [
-  { label: "Find Accommodation", href: "#search" },
-  { label: "Cities", href: "#cities" },
-  { label: "About Us", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "Find Accommodation", href: "/find-accommodation" },
+  { label: "Cities", href: "/cities" },
+  { label: "About Us", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export function Navbar() {
@@ -36,17 +38,8 @@ export function Navbar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <nav className="flex h-16 lg:h-20 items-center justify-between">
           {/* Brand */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="relative h-9 w-9 rounded-xl bg-brand flex items-center justify-center transition-transform group-hover:scale-105">
-              <span className="font-display font-bold text-base text-brand-foreground">a</span>
-              <div className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-accent" />
-            </div>
-            <span className={cn(
-              "font-display font-semibold text-[17px] tracking-tight transition-colors",
-              scrolled ? "text-ink" : "text-ink"
-            )}>
-              Accommodation<span className="text-brand">Finders</span>
-            </span>
+          <Link href="/" className="flex items-center">
+            <Logo variant={scrolled ? "dark" : "light"} className="h-9" />
           </Link>
 
           {/* Desktop nav */}

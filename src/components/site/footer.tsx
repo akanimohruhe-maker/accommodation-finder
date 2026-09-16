@@ -1,26 +1,27 @@
 import Link from "next/link";
 import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
+import { Logo } from "@/components/site/logo";
 
 const quickLinks = [
-  { label: "Find Accommodation", href: "#search" },
-  { label: "Search Availability", href: "#" },
-  { label: "Search Results", href: "#" },
-  { label: "Booking Confirmation", href: "#" },
-  { label: "Booking Cancellation", href: "#" },
-  { label: "My Account", href: "#" },
+  { label: "Find Accommodation", href: "/find-accommodation" },
+  { label: "Search Availability", href: "/search-availability" },
+  { label: "Search Results", href: "/search-results" },
+  { label: "Booking Confirmation", href: "/booking-confirmation" },
+  { label: "Booking Cancellation", href: "/booking-cancellation" },
+  { label: "My Account", href: "/my-account" },
 ];
 
 const cities = [
-  { label: "London", href: "#" },
-  { label: "Manchester", href: "#" },
-  { label: "Birmingham", href: "#" },
-  { label: "Leicester", href: "#" },
-  { label: "Northampton", href: "#" },
+  { label: "London", href: "/cities" },
+  { label: "Manchester", href: "/cities" },
+  { label: "Birmingham", href: "/cities" },
+  { label: "Leicester", href: "/cities" },
+  { label: "Northampton", href: "/cities" },
 ];
 
 const support = [
-  { label: "About us", href: "#about" },
-  { label: "Contact us", href: "#contact" },
+  { label: "About us", href: "/about" },
+  { label: "Contact us", href: "/contact" },
   { label: "Privacy Policy", href: "#" },
   { label: "Terms & Conditions", href: "#" },
 ];
@@ -62,19 +63,11 @@ export function Footer() {
       {/* Main footer */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 lg:gap-10">
-          {/* Brand column (spans 2 cols on lg) */}
+          {/* Brand column */}
           <div className="col-span-2 lg:col-span-2 max-w-sm">
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="relative h-9 w-9 rounded-xl bg-brand flex items-center justify-center">
-                <span className="font-display font-bold text-base text-brand-foreground">a</span>
-                <div className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-accent" />
-              </div>
-              <span className="font-display font-semibold text-[17px] tracking-tight text-white">
-                Accommodation<span className="text-accent">Finders</span>
-              </span>
-            </Link>
+            <Logo variant="light" showTagline />
             <p className="mt-5 text-[14px] text-white/60 leading-relaxed">
-              Providing accommodations that suit your budget — viewings, lease
+              Providing accommodations that suit your budget. Viewings, lease
               agreements, roommate matching and moving-in support, all under one roof.
             </p>
 

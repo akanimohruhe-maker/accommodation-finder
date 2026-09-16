@@ -12,11 +12,11 @@ export function Testimonials() {
           </div>
 
           <blockquote className="headline text-ink text-[26px] sm:text-[34px] lg:text-[42px] leading-[1.15] tracking-tight">
-            <span className="text-brand">“</span>I was moving from Lagos to Leicester and
-            couldn’t view properties in person. Accommodation Finders did the viewings,
+            <span className="text-brand">&ldquo;</span>I was moving from Lagos to Leicester and
+            couldn&rsquo;t view properties in person. Accommodation Finders did the viewings,
             negotiated my lease, and someone was at the door to hand me keys when I landed.
-            I’d recommend them to any international student coming to the UK.
-            <span className="text-brand">”</span>
+            I&rsquo;d recommend them to any international student coming to the UK.
+            <span className="text-brand">&rdquo;</span>
           </blockquote>
 
           <div className="mt-8 flex items-center justify-center gap-3">
