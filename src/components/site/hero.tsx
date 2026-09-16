@@ -39,12 +39,13 @@ export function Hero() {
       {/* Hero content */}
       <div className="relative z-10 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 pt-32 lg:pt-40 pb-20 lg:pb-32">
         <div className="max-w-3xl fade-up">
-          {/* Two-line headline, Amarante font, color-cycle animation */}
-          <h1 className="hero-headline text-white text-[56px] sm:text-[80px] lg:text-[112px]">
-            <span className="block">
+          {/* Two-line headline, Amarante font, color-cycle animation.
+              whitespace-nowrap prevents 'perfect' / 'Accommodation' from breaking. */}
+          <h1 className="hero-headline text-white text-[44px] sm:text-[64px] lg:text-[88px] xl:text-[100px]">
+            <span className="block whitespace-nowrap">
               <AnimatedText text="Find your perfect" />
             </span>
-            <span className="block mt-2 lg:mt-4">
+            <span className="block mt-2 lg:mt-4 whitespace-nowrap">
               <AnimatedText text="Accommodation" />
             </span>
             <span className="sr-only">Find your perfect Accommodation</span>

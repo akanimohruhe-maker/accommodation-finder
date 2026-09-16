@@ -237,3 +237,87 @@
   transform-origin: 50% 50%;
   display: block;
 }
+
+/* ============================================================
+   Geometric patterns (left side, fixed position, after hero)
+   Slow, ambient, non-distracting animations in brand alternate theme
+   ============================================================ */
+@keyframes gpRotate {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes gpRotateReverse {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
+@keyframes gpPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50%      { opacity: 0.7; transform: scale(1.15); }
+}
+@keyframes gpPulseStagger1 {
+  0%, 100% { opacity: 0.2; }
+  50%      { opacity: 0.6; }
+}
+@keyframes gpPulseStagger2 {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 0.2; }
+}
+@keyframes gpPulseStagger3 {
+  0%, 100% { opacity: 0.3; }
+  30%      { opacity: 0.7; }
+  70%      { opacity: 0.4; }
+}
+@keyframes gpPulseStagger4 {
+  0%, 100% { opacity: 0.5; }
+  40%      { opacity: 0.2; }
+  80%      { opacity: 0.6; }
+}
+
+.gp-rotate        { animation: gpRotate        18s linear infinite; transform-origin: 50% 50%; transform-box: fill-box; }
+.gp-rotate-slow    { animation: gpRotate        28s linear infinite; transform-origin: 50% 50%; transform-box: fill-box; }
+.gp-rotate-slower  { animation: gpRotateReverse 36s linear infinite; transform-origin: 50% 50%; transform-box: fill-box; }
+.gp-pulse   { animation: gpPulse           3.6s ease-in-out infinite; transform-origin: 50% 50%; transform-box: fill-box; }
+.gp-pulse-1 { animation: gpPulseStagger1   4.2s ease-in-out infinite; }
+.gp-pulse-2 { animation: gpPulseStagger2   5.1s ease-in-out infinite; }
+.gp-pulse-3 { animation: gpPulseStagger3   4.6s ease-in-out infinite; }
+.gp-pulse-4 { animation: gpPulseStagger4   5.4s ease-in-out infinite; }
+
+/* ============================================================
+   Marquees — horizontal auto-scroll tracks.
+   Two tracks move in OPPOSITE directions but at the SAME speed
+   so they feel "in harmony" — they pass each other at a steady
+   rhythm without colliding.
+   ============================================================ */
+@keyframes marqueeLeft {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }   /* moves content left by half its width = one full set */
+}
+@keyframes marqueeRight {
+  0%   { transform: translateX(-50%); }   /* starts shifted, ends at 0 — moves right */
+  100% { transform: translateX(0); }
+}
+
+.marquee-track-left  { animation: marqueeLeft  45s linear infinite; }
+.marquee-track-right { animation: marqueeRight 45s linear infinite; }
+
+/* Pause on hover for accessibility */
+.marquee-container:hover .marquee-track-left,
+.marquee-container:hover .marquee-track-right {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track-left,
+  .marquee-track-right,
+  .color-cycle,
+  .gp-rotate,
+  .gp-rotate-slow,
+  .gp-rotate-slower,
+  .gp-pulse,
+  .gp-pulse-1,
+  .gp-pulse-2,
+  .gp-pulse-3,
+  .gp-pulse-4 {
+    animation: none !important;
+  }
+}

@@ -26,6 +26,7 @@ export default function FindAccommodationPage() {
         eyebrow: "Find your home",
         title: "Search 1,240+ verified properties.",
         description: "Filter by city, budget, move-in date and amenities. Every listing is inspected by our team before going live.",
+        heroImage: "/images/find-accommodation-hero.jpg",
       }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
