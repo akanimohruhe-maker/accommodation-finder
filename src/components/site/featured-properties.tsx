@@ -178,6 +178,8 @@ export function FeaturedProperties() {
                 alt={p.name}
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 draggable={false}
+                loading="lazy"
+                decoding="async"
                 onContextMenu={(e) => e.preventDefault()}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/30 via-transparent to-transparent" />

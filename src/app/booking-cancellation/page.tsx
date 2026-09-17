@@ -9,6 +9,8 @@ export default function BookingCancellationPage() {
         eyebrow: "Booking cancellation",
         title: "Cancel your booking.",
         description: "We're sorry this didn't work out. Cancel below and we'll release the booking immediately. Refund policy applies based on your cancellation timing.",
+        heroImage: "/images/cities/northampton-night.jpg",
+        badge: "Need help?",
       }}
     >
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">

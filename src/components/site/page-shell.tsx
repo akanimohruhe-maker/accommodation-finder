@@ -144,6 +144,8 @@ export function PageShell({
               alt=""
               className="h-full w-full object-cover"
               draggable={false}
+              loading="eager"
+              decoding="async"
               onContextMenu={(e) => e.preventDefault()}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-brand/75 via-brand/55 to-brand/90" />

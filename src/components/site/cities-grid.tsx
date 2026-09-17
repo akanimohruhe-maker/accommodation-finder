@@ -91,6 +91,8 @@ export function CitiesGrid() {
                 alt="London cityscape"
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 draggable={false}
+                loading="lazy"
+                decoding="async"
                 onContextMenu={(e) => e.preventDefault()}
               />
               <div className="absolute inset-0 bg-gradient-to-r from-transparent to-bg-elevated/10 lg:to-bg-elevated" />
@@ -157,6 +159,8 @@ export function CitiesGrid() {
                   alt={`${city.name} at ${city.period}`}
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   draggable={false}
+                  loading="lazy"
+                  decoding="async"
                   onContextMenu={(e) => e.preventDefault()}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />

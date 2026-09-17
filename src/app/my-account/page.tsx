@@ -38,6 +38,8 @@ export default function MyAccountPage() {
         eyebrow: "My account",
         title: "Welcome back, David.",
         description: "Manage your active booking, review past tenancies, and update your profile and notification preferences.",
+        heroImage: "/images/cities/leicester-dusk.jpg",
+        badge: "Your dashboard",
       }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-16">

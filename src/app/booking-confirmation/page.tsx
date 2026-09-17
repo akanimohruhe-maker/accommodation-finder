@@ -26,6 +26,8 @@ export default function BookingConfirmationPage() {
         eyebrow: "Booking confirmation",
         title: "You're almost there, David.",
         description: "Skyline View Apartments, Canary Wharf, London. Move-in 28 September 2026. Review the lease and pay the deposit to lock in your booking.",
+        heroImage: "/images/cities/london-day.jpg",
+        badge: "Step 4 of 4",
       }}
     >
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">

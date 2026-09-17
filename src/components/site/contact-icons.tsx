@@ -11,10 +11,24 @@
  * Each icon accepts the standard Lucide-like props (size, className) and is
  * rendered with the brand color scheme. They are deliberately NOT Lucide
  * outline icons — they have a more bespoke, branded feel.
+ *
+ * Subtle hover animations (defined in globals.css) are triggered by the
+ * parent element having the `.group` class and the icon's SVG having the
+ * corresponding `.contact-anim-*` class. Each icon gets a DIFFERENT animation
+ * so the user sees varied motion across the contact channels:
+ *
+ *   MailIcon     -> .contact-anim-mail     (gentle envelope flap flutter)
+ *   PhoneIcon    -> .contact-anim-phone    (phone ring-shake)
+ *   ChatIcon     -> .contact-anim-chat     (typing bubble float)
+ *   LocationIcon -> .contact-anim-location (pin-drop bob)
+ *   ClockIcon    -> .contact-anim-clock    (slow clockwise spin)
+ *
+ * All animations are disabled under prefers-reduced-motion.
  */
 
 type IconProps = {
   size?: number;
+  /** Optional extra class — used to attach the contact-anim-* hover animation. */
   className?: string;
 };
 
@@ -30,6 +44,8 @@ const SUN = {
  * MailIcon — an envelope formed from a rectangle + a triangular flap, with
  * small floating dot accents in the brand sun palette to suggest motion
  * ("your message is on its way").
+ *
+ * Hover animation: gentle flap flutter (contact-anim-mail).
  */
 export function MailIcon({ size = 24, className }: IconProps) {
   return (
@@ -80,6 +96,8 @@ export function MailIcon({ size = 24, className }: IconProps) {
 /**
  * PhoneIcon — a stylized phone handset inside concentric signal-ring arcs,
  * echoing the geometric concentric-circle motif of the homepage.
+ *
+ * Hover animation: phone ring-shake (contact-anim-phone).
  */
 export function PhoneIcon({ size = 24, className }: IconProps) {
   return (
@@ -97,16 +115,7 @@ export function PhoneIcon({ size = 24, className }: IconProps) {
       <path d="M33 38 Q43 30 39 14"     stroke={SUN.gold}   strokeWidth="1.5" strokeLinecap="round" opacity="0.65" fill="none" />
       <path d="M36 40 Q46 30 42 10"     stroke={SUN.orange} strokeWidth="1.5" strokeLinecap="round" opacity="0.85" fill="none" />
 
-      {/* Phone handset — geometric, formed from two rounded rectangles joined at a right angle */}
-      <path
-        d="M14 8 Q10 8 10 12 L10 16 Q10 20 14 22 L18 24 L20 22 Q22 20 22 18 L18 16 Q18 14 16 14 L14 14 Q12 14 12 16 L12 12 Q12 10 14 10 L18 10 Q20 10 20 12 L20 14 Q22 14 22 12 L22 12 Q22 8 18 8 Z"
-        stroke={SUN.orange}
-        strokeWidth="2"
-        strokeLinejoin="round"
-        fill={SUN.amber}
-        fillOpacity="0.15"
-      />
-      {/* Simplified handset shape (cleaner rendering fallback) */}
+      {/* Phone handset — geometric, formed from a rounded shape */}
       <path
         d="M14 10 Q10 10 10 14 L10 18 Q14 22 22 26 Q26 30 30 34 L34 38 Q38 38 38 34 L38 30 Q34 28 30 30 L26 26 Q22 22 22 18 L20 14 Q20 10 18 10 Z"
         stroke={SUN.orange}
@@ -125,6 +134,8 @@ export function PhoneIcon({ size = 24, className }: IconProps) {
  * ChatIcon — a chat bubble formed from a rounded square + a small tail
  * triangle, with three small dots inside (typing indicator) and small
  * floating dots outside.
+ *
+ * Hover animation: bubble float (contact-anim-chat).
  */
 export function ChatIcon({ size = 24, className }: IconProps) {
   return (
@@ -161,6 +172,8 @@ export function ChatIcon({ size = 24, className }: IconProps) {
  * LocationIcon — a location pin formed from a circle on top + a triangle
  * underneath, with concentric rings inside the circle to echo the homepage
  * geometric pattern.
+ *
+ * Hover animation: pin-drop bob (contact-anim-location).
  */
 export function LocationIcon({ size = 24, className }: IconProps) {
   return (
@@ -198,6 +211,8 @@ export function LocationIcon({ size = 24, className }: IconProps) {
 /**
  * ClockIcon — a clock face with sun rays radiating outward (suggesting the
  * passage of time as a daily cycle), with geometric hour markers.
+ *
+ * Hover animation: slow clockwise spin (contact-anim-clock).
  */
 export function ClockIcon({ size = 24, className }: IconProps) {
   return (
@@ -239,3 +254,4 @@ export function ClockIcon({ size = 24, className }: IconProps) {
     </svg>
   );
 }
+

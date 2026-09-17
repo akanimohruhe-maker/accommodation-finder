@@ -6,6 +6,7 @@ import {
   LocationIcon,
   ClockIcon,
 } from "@/components/site/contact-icons";
+import { LogoSilhouette } from "@/components/site/logo-silhouette";
 
 const contactChannels = [
   {
@@ -13,18 +14,21 @@ const contactChannels = [
     label: "Email us",
     value: "hello@accommodationfinders.co.uk",
     sub: "We reply within one business day.",
+    animClass: "contact-anim-mail",
   },
   {
     Icon: PhoneIcon,
     label: "Call us",
     value: "+44 (0) 20 1234 5678",
     sub: "Mon to Fri, 9am to 6pm UK time.",
+    animClass: "contact-anim-phone",
   },
   {
     Icon: ChatIcon,
     label: "Live chat",
     value: "Available in-app",
     sub: "Once you're logged in, chat with our team.",
+    animClass: "contact-anim-chat",
   },
 ];
 
@@ -55,7 +59,7 @@ export default function ContactPage() {
               {/* Icon container — soft brand tinted background with a warm
                   accent on hover, to make the bespoke geometric icons pop */}
               <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-sun-1/8 to-sun-2/8 border border-sun-1/20 mb-5 group-hover:from-sun-1/15 group-hover:to-sun-2/15 transition-colors">
-                <c.Icon size={28} />
+                <c.Icon size={28} className={c.animClass} />
               </div>
               <p className="text-[12px] uppercase tracking-wider text-ink-muted mb-1.5">
                 {c.label}
@@ -67,10 +71,20 @@ export default function ContactPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Contact form */}
-          <form className="bg-bg-elevated border border-line rounded-2xl p-6 lg:p-8 space-y-5">
-            <h2 className="headline text-ink text-[24px] mb-2">Send us a message</h2>
-            <p className="text-[14px] text-ink-soft mb-4">We'll get back within 24 hours.</p>
+          {/* Contact form — has a faint logo silhouette watermark in the
+              top-right corner to subtly reinforce the brand while the user
+              composes their message. */}
+          <form className="relative bg-bg-elevated border border-line rounded-2xl p-6 lg:p-8 space-y-5 overflow-hidden">
+            {/* Watermark — top-right corner, faint brand silhouette. */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -top-6 -right-6 opacity-[0.04] select-none"
+              data-shield
+            >
+              <LogoSilhouette size={180} className="text-ink" />
+            </div>
+            <h2 className="relative headline text-ink text-[24px] mb-2">Send us a message</h2>
+            <p className="relative text-[14px] text-ink-soft mb-4">We'll get back within 24 hours.</p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <label className="block">
@@ -145,7 +159,7 @@ export default function ContactPage() {
                   className="group bg-bg-elevated border border-line rounded-2xl p-5 flex items-start gap-4 hover:border-brand/30 transition-colors"
                 >
                   <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-sun-1/8 to-sun-2/8 border border-sun-1/20 shrink-0 group-hover:from-sun-1/15 group-hover:to-sun-2/15 transition-colors">
-                    <LocationIcon size={24} />
+                    <LocationIcon size={24} className="contact-anim-location" />
                   </div>
                   <div>
                     <p className="font-display font-semibold text-[16px] text-ink">{o.city} office</p>
@@ -155,9 +169,9 @@ export default function ContactPage() {
               ))}
             </ul>
 
-            <div className="mt-8 bg-gradient-to-br from-brand/4 to-sun-1/4 border border-brand/15 rounded-2xl p-5 flex items-start gap-4">
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-sun-1/10 to-sun-2/10 border border-sun-1/20 shrink-0">
-                <ClockIcon size={24} />
+            <div className="group mt-8 bg-gradient-to-br from-brand/4 to-sun-1/4 border border-brand/15 rounded-2xl p-5 flex items-start gap-4 hover:border-brand/30 transition-colors">
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-sun-1/10 to-sun-2/10 border border-sun-1/20 shrink-0 group-hover:from-sun-1/20 group-hover:to-sun-2/20 transition-colors">
+                <ClockIcon size={24} className="contact-anim-clock" />
               </div>
               <div>
                 <p className="font-display font-semibold text-[15px] text-ink">Support hours</p>

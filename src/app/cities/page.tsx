@@ -1,6 +1,7 @@
 import { PageShell } from "@/components/site/page-shell";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { LogoSilhouette } from "@/components/site/logo-silhouette";
 
 /**
  * Cities page — shows the 5 UK cities Accommodation Finders operates in.
@@ -136,8 +137,18 @@ export default function CitiesPage() {
         badge: "Updated weekly",
       }}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        {/* Faint logo silhouette watermark behind the city-card grid —
+            placed bottom-right, only on >= lg screens so it doesn't
+            interfere with mobile card content. */}
+        <div
+          aria-hidden="true"
+          data-shield
+          className="pointer-events-none absolute right-[-80px] bottom-[-60px] opacity-[0.025] select-none hidden lg:block"
+        >
+          <LogoSilhouette size={420} className="text-ink" animate />
+        </div>
+        <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-6">
           {cities.map((city) => (
             <Link
               key={city.name}
@@ -158,6 +169,8 @@ export default function CitiesPage() {
                         alt={`${city.name} — ${city.captions?.[i] ?? `view ${i + 1}`}`}
                         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                         draggable={false}
+                        loading="lazy"
+                        decoding="async"
                       />
                       {/* Optional small caption strip on each photo */}
                       {city.captions && (

@@ -239,6 +239,75 @@
 }
 
 /* ============================================================
+   Bespoke contact-icon hover animations — 5 distinct subtle motions,
+   randomized per icon so each one feels different on the Contact page.
+   All triggered only when the parent .group is hovered. Reduced motion
+   users see no animation (per the global prefers-reduced-motion rule).
+   ============================================================ */
+
+/* MailIcon — gentle horizontal envelope "flap flutter"
+   (the flap appears to open/close as the icon tilts slightly) */
+@keyframes contactMailFlap {
+  0%,   100% { transform: rotate(0deg) scale(1); }
+  20%       { transform: rotate(-3deg) scale(1.05); }
+  50%       { transform: rotate(0deg)  scale(1.06); }
+  80%       { transform: rotate(3deg)  scale(1.05); }
+}
+.group:hover .contact-anim-mail {
+  animation: contactMailFlap 1.8s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+
+/* PhoneIcon — gentle ring-shake, like a phone vibrating */
+@keyframes contactPhoneRing {
+  0%,   100% { transform: rotate(0deg) translateX(0); }
+  10%       { transform: rotate(-8deg) translateX(-1px); }
+  20%       { transform: rotate(8deg)  translateX(1px); }
+  30%       { transform: rotate(-8deg) translateX(-1px); }
+  40%       { transform: rotate(8deg)  translateX(1px); }
+  50%       { transform: rotate(0deg)  translateX(0); }
+}
+.group:hover .contact-anim-phone {
+  animation: contactPhoneRing 1.4s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+
+/* ChatIcon — bubble float + slight bounce, like a typing indicator
+   hovering in air */
+@keyframes contactChatFloat {
+  0%,   100% { transform: translateY(0) scale(1); }
+  30%       { transform: translateY(-3px) scale(1.04); }
+  60%       { transform: translateY(-1px) scale(1.02); }
+}
+.group:hover .contact-anim-chat {
+  animation: contactChatFloat 2s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+
+/* LocationIcon — slow pin-drop, like the pin is gently bobbing on the map */
+@keyframes contactPinDrop {
+  0%,   100% { transform: translateY(0) scale(1); }
+  25%       { transform: translateY(-4px) scale(1.06); }
+  50%       { transform: translateY(0)   scale(1); }
+  75%       { transform: translateY(-2px) scale(1.03); }
+}
+.group:hover .contact-anim-location {
+  animation: contactPinDrop 1.7s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+
+/* ClockIcon — slow clockwise rotation of the whole clock (which keeps
+   the hands visually in sync with the surrounding sun rays) */
+@keyframes contactClockSpin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.group:hover .contact-anim-clock {
+  animation: contactClockSpin 4s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+/* ============================================================
    Geometric patterns (left side, fixed position, after hero)
    Slow, ambient, non-distracting animations in brand alternate theme
    ============================================================ */
@@ -317,7 +386,12 @@
   .gp-pulse-1,
   .gp-pulse-2,
   .gp-pulse-3,
-  .gp-pulse-4 {
+  .gp-pulse-4,
+  .contact-anim-mail,
+  .contact-anim-phone,
+  .contact-anim-chat,
+  .contact-anim-location,
+  .contact-anim-clock {
     animation: none !important;
   }
 }
@@ -327,7 +401,7 @@
    - Prevents drag-to-save, image selection, and long-press
      save menus on touch devices.
    - The <ImageShield> component in layout.tsx handles right-click
-     suppression and keyboard shortcuts (Ctrl+S, Ctrl+U).
+     suppression (site-wide) and keyboard shortcuts (Ctrl+S, Ctrl+U, etc.).
    - Combined with draggable={false} on every <img> tag.
    ============================================================ */
 img {
@@ -339,6 +413,17 @@ img {
   -webkit-touch-callout: none;
 }
 
+/* Site-wide text selection disable. Per the user's instruction, the entire
+   site should be non-savable client-side. Form fields (inputs, textareas,
+   selects, contenteditable) are explicitly re-enabled below so the Contact
+   form and search inputs remain usable. */
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
 /* Header elements (page heroes, navbar) — non-selectable to prevent
    text-selection-based copying of header content. */
 [data-shield] {
@@ -347,10 +432,19 @@ img {
   -webkit-touch-callout: none;
 }
 
-/* But allow selection inside form inputs and textareas — otherwise
-   the form fields in the Contact page would be unusable. */
+/* Re-enable selection for form fields so the Contact form and search inputs
+   remain usable. */
 input, textarea, select, [contenteditable="true"] {
   -webkit-user-select: text;
   user-select: text;
+  -moz-user-select: text;
   -webkit-touch-callout: default;
+}
+
+/* Also re-enable for any element with the .selectable utility class (for
+   future use if we need to allow selection on a specific block of text). */
+.selectable {
+  -webkit-user-select: text !important;
+  user-select: text !important;
+  -moz-user-select: text !important;
 }

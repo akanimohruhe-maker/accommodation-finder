@@ -1,5 +1,6 @@
 import { PageShell } from "@/components/site/page-shell";
 import { Logo } from "@/components/site/logo";
+import { LogoSilhouette } from "@/components/site/logo-silhouette";
 
 const values = [
   {
@@ -40,11 +41,23 @@ export default function AboutPage() {
       }}
     >
       {/* Mission statement */}
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24 text-center">
-        <Logo variant="stacked" showTagline className="mx-auto mb-12" />
-        <p className="text-[22px] lg:text-[28px] leading-[1.35] text-ink font-display font-medium tracking-tight">
-          Our mission is simple. Better places. Brighter stays. We vet every property, negotiate every lease, and stand behind every booking. If a listing is on this site, you can trust it.
-        </p>
+      <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24 text-center overflow-hidden">
+        {/* Faint logo silhouette behind the mission statement — slow ambient
+            rotation in the brand's geometric style. Visible only on >= lg
+            screens so it doesn't clutter mobile. */}
+        <div
+          aria-hidden="true"
+          data-shield
+          className="pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-0 opacity-[0.03] select-none hidden lg:block"
+        >
+          <LogoSilhouette size={360} className="text-ink" animate />
+        </div>
+        <div className="relative">
+          <Logo variant="stacked" showTagline className="mx-auto mb-12" />
+          <p className="text-[22px] lg:text-[28px] leading-[1.35] text-ink font-display font-medium tracking-tight">
+            Our mission is simple. Better places. Brighter stays. We vet every property, negotiate every lease, and stand behind every booking. If a listing is on this site, you can trust it.
+          </p>
+        </div>
       </div>
 
       {/* Values */}

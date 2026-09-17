@@ -106,6 +106,8 @@ export default function SearchResultsPage() {
         eyebrow: "Search results",
         title: "6 verified properties match your filters.",
         description: "Showing results for move-in 28 September 2026, 1 guest, across London, Manchester, Birmingham, Leicester, Northampton.",
+        heroImage: "/images/cities/manchester-dusk.jpg",
+        badge: "Step 3 of 4",
       }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-16">

@@ -9,6 +9,8 @@ export default function SearchAvailabilityPage() {
         eyebrow: "Search availability",
         title: "When are you moving in?",
         description: "Pick your dates and we'll show only verified properties that are actually available for that period. No bait listings, no out-of-date calendars.",
+        heroImage: "/images/cities/birmingham-day.jpg",
+        badge: "Step 2 of 4",
       }}
     >
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
