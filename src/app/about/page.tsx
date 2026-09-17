@@ -1,6 +1,7 @@
 import { PageShell } from "@/components/site/page-shell";
 import { Logo } from "@/components/site/logo";
 import { LogoSilhouette } from "@/components/site/logo-silhouette";
+import { Wordmark } from "@/components/site/wordmark";
 
 const values = [
   {
@@ -53,7 +54,13 @@ export default function AboutPage() {
           <LogoSilhouette size={360} className="text-ink" animate />
         </div>
         <div className="relative">
-          <Logo variant="stacked" showTagline className="mx-auto mb-12" />
+          <Logo variant="stacked" showTagline className="mx-auto mb-8" />
+          {/* Brand name wordmark — Allura cursive + Bricolage Grotesque bold,
+              matching the logo's exact font recipe. Visible on the white
+              mission-statement section to reinforce the brand. */}
+          <div className="flex justify-center mb-10">
+            <Wordmark scale={1.4} accent="orange" className="text-ink" />
+          </div>
           <p className="text-[22px] lg:text-[28px] leading-[1.35] text-ink font-display font-medium tracking-tight">
             Our mission is simple. Better places. Brighter stays. We vet every property, negotiate every lease, and stand behind every booking. If a listing is on this site, you can trust it.
           </p>

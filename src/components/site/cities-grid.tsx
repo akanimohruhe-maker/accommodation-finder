@@ -2,6 +2,8 @@
 
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { Logo } from "@/components/site/logo";
+import { Wordmark } from "@/components/site/wordmark";
 
 type City = {
   name: string;
@@ -184,6 +186,32 @@ export function CitiesGrid() {
               </div>
             </Link>
           ))}
+        </div>
+
+        {/* Brand block — sits just under the Northampton image (the last
+            card in the 4-city grid above). Shows an upscaled logo + a bold
+            "Accommodation finders" wordmark (using the same font recipe as
+            the official logo PNG: Allura cursive for "Accommodation" +
+            Bricolage Grotesque bold for "finders"). The block is centred
+            on a warm cream background to break up the white page and to
+            draw the eye to the brand as the user finishes scanning the
+            city grid. */}
+        <div
+          className="mt-12 lg:mt-16 relative overflow-hidden rounded-3xl bg-gradient-to-br from-sun-1/8 via-bg-elevated to-sun-2/8 border border-sun-1/15 py-12 lg:py-16 px-6 text-center"
+          data-shield
+        >
+          {/* Upscaled logo — visible prominently at the center */}
+          <div className="flex justify-center mb-4">
+            <Logo variant="dark" size={88} />
+          </div>
+          {/* Bold wordmark in the exact logo font recipe */}
+          <Wordmark scale={1.6} accent="orange" className="text-ink justify-center" />
+          {/* Tagline */}
+          <p className="mt-5 text-[15px] lg:text-[17px] text-ink-soft max-w-2xl mx-auto leading-relaxed">
+            Verified student accommodations across London, Manchester,
+            Birmingham, Leicester and Northampton. Better places.
+            Brighter stays.
+          </p>
         </div>
       </div>
     </section>

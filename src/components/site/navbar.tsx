@@ -6,6 +6,7 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/site/logo";
+import { SignInDropdown } from "@/components/site/sign-in-dropdown";
 
 const navLinks = [
   { label: "About Us", href: "/about" },
@@ -83,25 +84,9 @@ export function Navbar() {
               );
             })}
 
-            {/* Get started — hover reveals Sign in */}
-            <div className="ml-2 relative group">
-              <Button
-                size="sm"
-                className="bg-brand text-brand-foreground hover:bg-brand-soft rounded-full px-4"
-              >
-                Get started
-                <ChevronDown className="ml-1 h-3.5 w-3.5 transition-transform group-hover:rotate-180" />
-              </Button>
-              <div className="absolute top-full right-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 -translate-y-1 group-hover:translate-y-0">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="bg-bg-elevated text-ink-soft border-line hover:text-ink hover:border-brand/30 rounded-full px-4 shadow-[0_8px_24px_-8px_rgba(15,23,42,0.25)] whitespace-nowrap w-full"
-                >
-                  Sign in
-                </Button>
-              </div>
-            </div>
+            {/* Get started — hover/click reveals a bubble dropdown with
+                the three sign-in methods (Zoho, email, username+password). */}
+            <SignInDropdown light={!scrolled} />
           </div>
 
           {/* Mobile toggle */}
@@ -148,9 +133,39 @@ export function Navbar() {
             >
               Contact
             </Link>
-            <div className="flex gap-2 mt-2 pt-3 border-t border-line">
-              <Button variant="outline" size="sm" className="flex-1 rounded-full">Sign in</Button>
-              <Button size="sm" className="flex-1 bg-brand text-brand-foreground hover:bg-brand-soft rounded-full">Get started</Button>
+            {/* Sign-in options — same three methods as the desktop dropdown */}
+            <div className="flex flex-col gap-1.5 mt-2 pt-3 border-t border-line">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand px-1 pb-1">
+                Sign in
+              </p>
+              <Link
+                href="/my-account"
+                onClick={() => setMobileOpen(false)}
+                className="px-3 py-2.5 text-[14px] font-medium text-ink-soft hover:text-ink hover:bg-line-soft rounded-lg"
+              >
+                Continue with Zoho
+              </Link>
+              <Link
+                href="/my-account"
+                onClick={() => setMobileOpen(false)}
+                className="px-3 py-2.5 text-[14px] font-medium text-ink-soft hover:text-ink hover:bg-line-soft rounded-lg"
+              >
+                Continue with email
+              </Link>
+              <Link
+                href="/my-account"
+                onClick={() => setMobileOpen(false)}
+                className="px-3 py-2.5 text-[14px] font-medium text-ink-soft hover:text-ink hover:bg-line-soft rounded-lg"
+              >
+                Sign in with username
+              </Link>
+              <Button
+                size="sm"
+                className="mt-2 bg-brand text-brand-foreground hover:bg-brand-soft rounded-full"
+                onClick={() => setMobileOpen(false)}
+              >
+                Get started
+              </Button>
             </div>
           </div>
         </div>

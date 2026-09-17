@@ -135,7 +135,12 @@ export function PageShell({
         data-shield
         onContextMenu={(e) => e.preventDefault()}
       >
-        {/* Optional hero background image with homepage-style dual gradient overlay */}
+        {/* Optional hero background image with homepage-style dual gradient overlay.
+            Overlay opacity reduced from /75 /55 /90 to /50 /30 /55 so the
+            underlying photo shows through more — the headers no longer
+            overpower the page palette. The navbar text remains readable
+            because the navbar itself sits above this section and has its
+            own backdrop-blur treatment. */}
         {header.heroImage && (
           <div className="absolute inset-0 z-0" data-shield>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -148,8 +153,14 @@ export function PageShell({
               decoding="async"
               onContextMenu={(e) => e.preventDefault()}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-brand/75 via-brand/55 to-brand/90" />
-            <div className="absolute inset-0 bg-gradient-to-r from-ink/55 via-ink/15 to-transparent" />
+            {/* Primary vertical navy overlay — top to bottom. */}
+            <div className="absolute inset-0 bg-gradient-to-b from-brand/55 via-brand/30 to-brand/55" />
+            {/* Subtle bottom-only ink overlay so the bottom edge fades to navy
+                and the page content (white bg) appears to "rise" out of the header. */}
+            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-brand/70" />
+            {/* Left-side ink overlay — so the headline on the left side has
+                enough contrast without darkening the whole image. */}
+            <div className="absolute inset-0 bg-gradient-to-r from-ink/40 via-ink/10 to-transparent" />
           </div>
         )}
 

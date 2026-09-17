@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 import { Logo } from "@/components/site/logo";
+import { Wordmark } from "@/components/site/wordmark";
 import { EnvelopeMark, PhoneMark, LocationMark } from "@/components/site/contact-marks";
 
 const quickLinks = [
@@ -23,8 +24,8 @@ const cities = [
 const support = [
   { label: "About us", href: "/about" },
   { label: "Contact us", href: "/contact" },
-  { label: "Privacy Policy", href: "#" },
-  { label: "Terms & Conditions", href: "#" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms & Conditions", href: "/terms-conditions" },
 ];
 
 export function Footer() {
@@ -67,6 +68,12 @@ export function Footer() {
           {/* Brand column */}
           <div className="col-span-2 lg:col-span-2 max-w-sm">
             <Logo variant="light" size={48} />
+            {/* Wordmark rendered in the exact logo font recipe — Allura
+                cursive for "Accommodation" + Bricolage Grotesque bold for
+                "finders". Tinted in brand orange to match the logo's sun. */}
+            <div className="mt-3">
+              <Wordmark scale={0.9} accent="orange" className="text-white" />
+            </div>
             <p className="mt-5 text-[14px] text-white/60 leading-relaxed">
               Providing accommodations that suit your budget. Viewings, lease
               agreements, roommate matching and moving-in support, all under one roof.
@@ -176,12 +183,20 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-[12.5px] text-white/50">
-            © 2026 Accommodation Finders. All rights reserved.
+            © 2026 <span className="inline-flex items-baseline gap-1">
+              <span style={{ fontFamily: "var(--font-wordmark)", fontSize: "16px", color: "#FF8C00", lineHeight: 1 }}>
+                Accommodation
+              </span>
+              <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "11px", letterSpacing: "-0.01em", lineHeight: 1, transform: "translateY(-1px)", display: "inline-block" }}>
+                finders
+              </span>
+            </span>
+            . All rights reserved.
           </p>
           <div className="flex items-center gap-5 text-[12.5px] text-white/50">
-            <Link href="#" className="hover:text-accent transition-colors">Privacy Policy</Link>
+            <Link href="/privacy-policy" className="hover:text-accent transition-colors">Privacy Policy</Link>
             <span className="text-white/20">|</span>
-            <Link href="#" className="hover:text-accent transition-colors">Terms &amp; Conditions</Link>
+            <Link href="/terms-conditions" className="hover:text-accent transition-colors">Terms &amp; Conditions</Link>
           </div>
         </div>
       </div>
