@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Bricolage_Grotesque, Space_Grotesk, Amarante } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { ImageShield } from "@/components/site/image-shield";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -44,6 +45,20 @@ export const metadata: Metadata = {
     "international student housing",
   ],
   authors: [{ name: "Accommodation Finders" }],
+  // Prevent search engines (Google, Bing, etc.) from indexing our images
+  // so they don't appear in Google Images search results where they could
+  // be hotlinked or downloaded. `noimageindex` is the older Next.js API
+  // and is what most crawlers actually honor.
+  robots: {
+    index: true,
+    follow: true,
+    noimageindex: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: true,
+    },
+  },
   openGraph: {
     title: "Accommodation Finders — Student Housing in the UK",
     description:
@@ -69,6 +84,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${bricolage.variable} ${spaceGrotesk.variable} ${amarante.variable} antialiased bg-background text-foreground`}
       >
+        <ImageShield />
         {children}
         <Toaster />
       </body>

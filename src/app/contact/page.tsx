@@ -1,21 +1,27 @@
 import { PageShell } from "@/components/site/page-shell";
-import { Mail, Phone, MapPin, MessageSquare, Clock } from "lucide-react";
+import {
+  MailIcon,
+  PhoneIcon,
+  ChatIcon,
+  LocationIcon,
+  ClockIcon,
+} from "@/components/site/contact-icons";
 
 const contactChannels = [
   {
-    Icon: Mail,
+    Icon: MailIcon,
     label: "Email us",
     value: "hello@accommodationfinders.co.uk",
     sub: "We reply within one business day.",
   },
   {
-    Icon: Phone,
+    Icon: PhoneIcon,
     label: "Call us",
     value: "+44 (0) 20 1234 5678",
     sub: "Mon to Fri, 9am to 6pm UK time.",
   },
   {
-    Icon: MessageSquare,
+    Icon: ChatIcon,
     label: "Live chat",
     value: "Available in-app",
     sub: "Once you're logged in, chat with our team.",
@@ -35,6 +41,8 @@ export default function ContactPage() {
         eyebrow: "Get in touch",
         title: "Talk to a real person.",
         description: "Whether you're a student searching for housing, a landlord looking to list, or a parent trying to verify a property, we're here to help.",
+        heroImage: "/images/cities/leicester-night.jpg",
+        badge: "We're here",
       }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
@@ -42,16 +50,18 @@ export default function ContactPage() {
           {contactChannels.map((c) => (
             <div
               key={c.label}
-              className="bg-bg-elevated border border-line rounded-2xl p-6 lg:p-8"
+              className="group bg-bg-elevated border border-line rounded-2xl p-6 lg:p-8 hover:border-brand/30 hover:shadow-[0_12px_40px_-16px_rgba(46,49,148,0.18)] transition-all"
             >
-              <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand/8 border border-brand/15 text-brand mb-4">
-                <c.Icon className="h-5 w-5" />
+              {/* Icon container — soft brand tinted background with a warm
+                  accent on hover, to make the bespoke geometric icons pop */}
+              <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-sun-1/8 to-sun-2/8 border border-sun-1/20 mb-5 group-hover:from-sun-1/15 group-hover:to-sun-2/15 transition-colors">
+                <c.Icon size={28} />
               </div>
-              <p className="text-[12px] uppercase tracking-wider text-ink-muted mb-1">
+              <p className="text-[12px] uppercase tracking-wider text-ink-muted mb-1.5">
                 {c.label}
               </p>
               <p className="font-display font-semibold text-[18px] text-ink">{c.value}</p>
-              <p className="mt-2 text-[13.5px] text-ink-soft">{c.sub}</p>
+              <p className="mt-2 text-[13.5px] text-ink-soft leading-relaxed">{c.sub}</p>
             </div>
           ))}
         </div>
@@ -132,10 +142,10 @@ export default function ContactPage() {
               {offices.map((o) => (
                 <li
                   key={o.city}
-                  className="bg-bg-elevated border border-line rounded-2xl p-5 flex items-start gap-4"
+                  className="group bg-bg-elevated border border-line rounded-2xl p-5 flex items-start gap-4 hover:border-brand/30 transition-colors"
                 >
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand/8 border border-brand/15 text-brand shrink-0">
-                    <MapPin className="h-5 w-5" />
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-sun-1/8 to-sun-2/8 border border-sun-1/20 shrink-0 group-hover:from-sun-1/15 group-hover:to-sun-2/15 transition-colors">
+                    <LocationIcon size={24} />
                   </div>
                   <div>
                     <p className="font-display font-semibold text-[16px] text-ink">{o.city} office</p>
@@ -145,11 +155,13 @@ export default function ContactPage() {
               ))}
             </ul>
 
-            <div className="mt-8 bg-brand/4 border border-brand/15 rounded-2xl p-5 flex items-start gap-3">
-              <Clock className="h-5 w-5 text-brand shrink-0 mt-0.5" />
+            <div className="mt-8 bg-gradient-to-br from-brand/4 to-sun-1/4 border border-brand/15 rounded-2xl p-5 flex items-start gap-4">
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-sun-1/10 to-sun-2/10 border border-sun-1/20 shrink-0">
+                <ClockIcon size={24} />
+              </div>
               <div>
                 <p className="font-display font-semibold text-[15px] text-ink">Support hours</p>
-                <p className="text-[13.5px] text-ink-soft mt-1">
+                <p className="text-[13.5px] text-ink-soft mt-1 leading-relaxed">
                   Phone and live chat: Monday to Friday, 9am to 6pm UK time.
                   Email: monitored daily, replies within 24 hours.
                   Urgent booking issues: 24/7 for active bookings.

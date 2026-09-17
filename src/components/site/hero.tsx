@@ -22,7 +22,11 @@ function AnimatedText({ text }: { text: string }) {
 
 export function Hero() {
   return (
-    <section className="relative min-h-[640px] lg:min-h-[760px] flex items-end overflow-hidden">
+    <section
+      className="relative min-h-[640px] lg:min-h-[760px] flex items-end overflow-hidden"
+      data-shield
+      onContextMenu={(e) => e.preventDefault()}
+    >
       {/* Background image with navy gradient overlay */}
       <div className="absolute inset-0 z-0">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -31,6 +35,8 @@ export function Hero() {
           alt="London cityscape at night"
           className="h-full w-full object-cover"
           loading="eager"
+          draggable={false}
+          onContextMenu={(e) => e.preventDefault()}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-brand/70 via-brand/40 to-brand/85" />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/40 via-transparent to-transparent" />

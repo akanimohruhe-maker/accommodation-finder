@@ -321,3 +321,36 @@
     animation: none !important;
   }
 }
+
+/* ============================================================
+   Image & header protection (client-side UX deterrent)
+   - Prevents drag-to-save, image selection, and long-press
+     save menus on touch devices.
+   - The <ImageShield> component in layout.tsx handles right-click
+     suppression and keyboard shortcuts (Ctrl+S, Ctrl+U).
+   - Combined with draggable={false} on every <img> tag.
+   ============================================================ */
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Disable tap-and-hold save menu on iOS Safari */
+  -webkit-touch-callout: none;
+}
+
+/* Header elements (page heroes, navbar) — non-selectable to prevent
+   text-selection-based copying of header content. */
+[data-shield] {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* But allow selection inside form inputs and textareas — otherwise
+   the form fields in the Contact page would be unusable. */
+input, textarea, select, [contenteditable="true"] {
+  -webkit-user-select: text;
+  user-select: text;
+  -webkit-touch-callout: default;
+}

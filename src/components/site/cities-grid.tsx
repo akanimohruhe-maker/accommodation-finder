@@ -90,6 +90,8 @@ export function CitiesGrid() {
                 src="/images/city-london-real.jpg"
                 alt="London cityscape"
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                draggable={false}
+                onContextMenu={(e) => e.preventDefault()}
               />
               <div className="absolute inset-0 bg-gradient-to-r from-transparent to-bg-elevated/10 lg:to-bg-elevated" />
             </div>
@@ -154,6 +156,8 @@ export function CitiesGrid() {
                   src={`/images/cities/${city.name.toLowerCase()}-${city.period}.jpg`}
                   alt={`${city.name} at ${city.period}`}
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  draggable={false}
+                  onContextMenu={(e) => e.preventDefault()}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
                 {/* Only the city name on the image — NO listings badge */}

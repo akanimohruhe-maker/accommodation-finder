@@ -25,6 +25,8 @@ export function Navbar() {
 
   return (
     <header
+      data-shield
+      onContextMenu={(e) => e.preventDefault()}
       className={cn(
         "fixed top-0 inset-x-0 z-50 transition-all duration-500",
         scrolled

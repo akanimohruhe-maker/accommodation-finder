@@ -35,6 +35,8 @@ export default function AboutPage() {
         eyebrow: "About us",
         title: "We started this because we got scammed.",
         description: "Accommodation Finders exists because the founders lost money to a fake agent. We built the platform we wished existed when we were students.",
+        heroImage: "/images/cities/manchester-day.jpg",
+        badge: "Our story",
       }}
     >
       {/* Mission statement */}
