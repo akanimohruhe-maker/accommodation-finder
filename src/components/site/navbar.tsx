@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/site/logo";
 import { SignInDropdown } from "@/components/site/sign-in-dropdown";
+import { CitiesTeardrop } from "@/components/site/cities-teardrop";
 
 const navLinks = [
   { label: "About Us", href: "/about" },
@@ -47,70 +48,11 @@ export function Navbar() {
           {/* Desktop nav */}
           <div className="hidden lg:flex items-center gap-1">
             {/* Find Accommodation — hover reveals the "Cities" link with a
-                teardrop animation. The teardrop card has a pointed top
-                (matches the bottom of the parent button), drops from
-                under the button, and hangs just beneath it. The card
-                uses the brand alternate palette (orange / yellow / gold)
-                for its accent border and the brand harmonic
-                white → soft-yellow → white vertical gradient for the
-                card body. */}
-            <div className="relative group">
-              <Link
-                href="/find-accommodation"
-                className="px-3.5 py-2 text-[14px] font-medium text-ink-soft hover:text-ink transition-colors rounded-lg hover:bg-line-soft inline-flex items-center gap-1"
-              >
-                Find Accommodation
-                <ChevronDown className="h-3.5 w-3.5 transition-transform group-hover:rotate-180" />
-              </Link>
-              {/* Teardrop "Cities" card — drops from the button.
-                  transform-origin is top center so the scaleY animation
-                  visually grows from the button, not from the page.
-                  The teardrop shape is created with a small pointed
-                  pseudo-arrow at the top + a rounded-3xl card. The
-                  brand-orange/yellow gradient border is applied via
-                  a wrapper (because Tailwind can't do gradient borders
-                  directly on a single element). */}
-              <div
-                className="absolute top-full left-0 pt-2 z-50 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-[visibility,opacity] duration-150"
-                style={{ transformOrigin: "top center" }}
-              >
-                {/* Gradient border wrapper — brand alternate colors */}
-                <div
-                  className="cities-teardrop-in rounded-[18px] p-[1.5px] shadow-[0_10px_30px_-10px_rgba(255,140,0,0.35)]"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, #FF8C00 0%, #FFC107 50%, #F9B43A 100%)",
-                  }}
-                >
-                  {/* Teardrop arrow (the point at the top that connects
-                      the card to the button) */}
-                  <div
-                    aria-hidden="true"
-                    className="absolute -top-1 left-7 h-3 w-3 rotate-45 bg-gradient-to-br from-sun-1 to-sun-2"
-                  />
-                  {/* Inner card — white → soft yellow → white gradient */}
-                  <Link
-                    href="/cities"
-                    className="block rounded-[16px] px-5 py-3 text-[13.5px] font-semibold whitespace-nowrap transition-colors hover:text-brand"
-                    style={{
-                      background:
-                        "linear-gradient(180deg, #FFFFFF 0%, #FFF8E8 50%, #FFFFFF 100%)",
-                    }}
-                  >
-                    <span className="flex items-center gap-2">
-                      {/* Small geometric sun-and-house mark in the brand
-                          alternate palette — matches the logo silhouette. */}
-                      <svg width="14" height="14" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-                        <circle cx="16" cy="16" r="13" stroke="#FF8C00" strokeWidth="1.5" fill="#FFC107" fillOpacity="0.15" />
-                        <path d="M9 22 L16 8 L23 22" stroke="#FF8C00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                        <line x1="12" y1="17" x2="20" y2="17" stroke="#F9B43A" strokeWidth="1.5" strokeLinecap="round" />
-                      </svg>
-                      Cities
-                    </span>
-                  </Link>
-                </div>
-              </div>
-            </div>
+                teardrop animation. The card literally drops from under
+                the button and hangs just beneath it. Uses the React
+                state-managed CitiesTeardrop component (so the animation
+                runs fresh on every hover, not on page load). */}
+            <CitiesTeardrop />
 
             {/* Plain nav links (About Us, Contact — Contact gets accent hover) */}
             {navLinks.map((link) => {

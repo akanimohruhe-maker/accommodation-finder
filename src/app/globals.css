@@ -452,6 +452,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* Only disable AMBIENT animations under reduced motion — the marquees,
+     geometric patterns, and ambient pulses run constantly and can cause
+     vestibular discomfort. The user-triggered animations (teardrop,
+     origami, contact icons) only fire on explicit hover/click, so we
+     leave them enabled — the user controls when they happen. */
   .marquee-track-left,
   .marquee-track-right,
   .color-cycle,
@@ -462,24 +467,8 @@
   .gp-pulse-1,
   .gp-pulse-2,
   .gp-pulse-3,
-  .gp-pulse-4,
-  .contact-anim-mail,
-  .contact-anim-phone,
-  .contact-anim-chat,
-  .contact-anim-location,
-  .contact-anim-clock {
+  .gp-pulse-4 {
     animation: none !important;
-  }
-  /* Disable the teardrop and origami dropdown animations — show the
-     dropdown instantly for users who prefer reduced motion. */
-  .cities-teardrop-in,
-  .cities-teardrop-out,
-  .origami-unfold-in,
-  .origami-unfold-out {
-    animation: none !important;
-    transform: none !important;
-    filter: none !important;
-    opacity: 1 !important;
   }
 }
 
