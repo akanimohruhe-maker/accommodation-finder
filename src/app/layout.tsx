@@ -3,6 +3,7 @@ import { Inter, Bricolage_Grotesque, Space_Grotesk, Amarante, Allura } from "nex
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ImageShield } from "@/components/site/image-shield";
+import { AuthSessionProvider } from "@/components/site/auth-session-provider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -128,9 +129,11 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${bricolage.variable} ${spaceGrotesk.variable} ${amarante.variable} ${allura.variable} antialiased bg-background text-foreground`}
       >
-        <ImageShield />
-        {children}
-        <Toaster />
+        <AuthSessionProvider>
+          <ImageShield />
+          {children}
+          <Toaster />
+        </AuthSessionProvider>
       </body>
     </html>
   );

@@ -2,14 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 
 /**
  * SignInDropdown — the "Get started" button reveals a bubble-style dropdown
  * containing the three sign-in methods:
- *   1. Zoho (continue with Zoho account)
- *   2. Email magic link
- *   3. Username + password (legacy form)
+ *   1. Zoho (continue with Zoho account) — redirects to Zoho OAuth consent
+ *   2. Email magic link                   — server sends one-time link
+ *   3. Username + password                — opens the custom sign-in page
  *
  * The bubble appears below the button with a soft drop-shadow and a small
  * arrow pointing up to the trigger. The dropdown:
@@ -21,6 +22,12 @@ import Link from "next/link";
  *
  * Per the user's spec, each option uses the bespoke geometric brand
  * visual language (sun-palette stroke icons + warm orange accent button).
+ *
+ * Auth integration:
+ *   - Zoho  → signIn("zoho", { callbackUrl: "/my-account" })
+ *   - Email → navigate to /auth/signin?method=email (the form handles send)
+ *   - User  → navigate to /auth/signin?method=credentials
+ *   - All three land on /my-account after successful sign-in.
  */
 
 type Props = {
@@ -104,16 +111,27 @@ const METHODS = [
     Icon: ZohoMark,
     label: "Continue with Zoho",
     sub: "Sign in with your Zoho account.",
+    // Use the Auth.js v5 client-side signIn helper. This redirects to
+    // /api/auth/signin/zoho which then redirects to Zoho's consent screen.
+    action: () => signIn("zoho", { callbackUrl: "/my-account" }),
   },
   {
     Icon: EnvelopeMark,
     label: "Continue with email",
     sub: "We'll send a one-time magic link.",
+    // Open the custom sign-in page with method=email. The page form then
+    // hits /api/auth/signin/email to send the magic link.
+    action: () => {
+      window.location.href = "/auth/signin?method=email&callbackUrl=/my-account";
+    },
   },
   {
     Icon: KeyMark,
     label: "Sign in with username",
     sub: "Use your Accommodation Finders account.",
+    action: () => {
+      window.location.href = "/auth/signin?method=credentials&callbackUrl=/my-account";
+    },
   },
 ];
 
@@ -231,10 +249,18 @@ export function SignInDropdown({ light }: Props) {
             <ul className="py-1.5" role="none">
               {METHODS.map((m) => (
                 <li key={m.label} role="none">
-                  <Link
-                    href="/my-account"
+                  <button
+                    type="button"
                     role="menuitem"
-                    className="group flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-brand/4 transition-colors"
+                    onClick={() => {
+                      // Close the dropdown before triggering the sign-in
+                      // flow so the user doesn't see a stale bubble if
+                      // they navigate back.
+                      setOpen(false);
+                      setClosing(false);
+                      m.action();
+                    }}
+                    className="group w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-brand/4 transition-colors text-left"
                   >
                     <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-sun-1/10 to-sun-2/10 border border-sun-1/20 shrink-0 group-hover:from-sun-1/20 group-hover:to-sun-2/20 transition-colors">
                       <m.Icon size={20} />
@@ -247,7 +273,7 @@ export function SignInDropdown({ light }: Props) {
                         {m.sub}
                       </span>
                     </span>
-                  </Link>
+                  </button>
                 </li>
               ))}
             </ul>
