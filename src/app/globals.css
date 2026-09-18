@@ -309,21 +309,79 @@
 }
 
 /* ============================================================
-   Sign-in dropdown bubble — pop-in and pop-out animation.
-   The bubble scales up from 95% to 100% with a subtle vertical
-   translate (starts 6px lower, settles at 0), and fades in. The
-   pop-out is the reverse with a shorter duration so closing feels
-   snappy.
+   Teardrop dropdown — used by the "Cities" link under
+   "Find Accommodation" in the navbar.
+   The dropdown card has a pointed top (teardrop shape) and appears
+   to "drop" from the button, hanging just under it. The brand-
+   alternate palette (orange / yellow / gold) is used for the
+   teardrop's accent border + the small drop-shadow trail.
+
+   transform-origin is "top center" so the dropdown unfolds from
+   the button (not from the page center).
    ============================================================ */
-@keyframes signInBubbleIn {
-  0%   { transform: translateY(6px) scale(0.95); opacity: 0; }
-  60%  { transform: translateY(-1px) scale(1.02); opacity: 1; }
-  100% { transform: translateY(0) scale(1); opacity: 1; }
+@keyframes citiesTeardropIn {
+  0%   { transform: scaleY(0.15) scaleX(0.55) translateY(-14px); opacity: 0; filter: blur(2px); }
+  55%  { transform: scaleY(0.7)  scaleX(0.92) translateY(-4px);  opacity: 0.85; filter: blur(0); }
+  85%  { transform: scaleY(1.04) scaleX(1.02) translateY(0);     opacity: 1; }
+  100% { transform: scaleY(1)    scaleX(1)    translateY(0);      opacity: 1; }
 }
-@keyframes signInBubbleOut {
-  0%   { transform: translateY(0) scale(1); opacity: 1; }
-  100% { transform: translateY(6px) scale(0.95); opacity: 0; }
+@keyframes citiesTeardropOut {
+  0%   { transform: scaleY(1)    scaleX(1)    translateY(0);      opacity: 1; }
+  100% { transform: scaleY(0.15) scaleX(0.55) translateY(-14px); opacity: 0; filter: blur(1px); }
 }
+
+/* The animation class — applied to the teardrop card. Transform-origin
+   is top center so the card appears to "drop" from the parent button. */
+.cities-teardrop-in {
+  animation: citiesTeardropIn 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+.cities-teardrop-out {
+  animation: citiesTeardropOut 220ms ease-in both;
+  transform-origin: top center;
+}
+
+/* ============================================================
+   Origami unfold — used by the "Get started" dropdown.
+   The dropdown card unfolds like origami paper: starts narrow
+   and angled (folded state), rotates open along the X axis with
+   a slight skew, and settles into its resting place. Parent has
+   `perspective: 800px` for the 3D effect.
+
+   The card uses a white → soft yellow → white vertical gradient
+   so it harmonises with the navbar background pattern (white,
+   yellow, white). The origami accent (outer border + drop shadow)
+   uses the brand alternate palette (orange / amber / gold).
+   ============================================================ */
+@keyframes origamiUnfoldIn {
+  0%   { transform: scaleY(0.05) scaleX(0.25) rotateX(60deg) skewX(15deg); opacity: 0; filter: blur(3px); }
+  35%  { transform: scaleY(0.45) scaleX(0.65) rotateX(35deg) skewX(8deg);  opacity: 0.5; filter: blur(1px); }
+  70%  { transform: scaleY(0.85) scaleX(0.97) rotateX(12deg) skewX(0deg);  opacity: 0.92; filter: blur(0); }
+  100% { transform: scaleY(1)    scaleX(1)    rotateX(0deg)  skewX(0deg);  opacity: 1; }
+}
+@keyframes origamiUnfoldOut {
+  0%   { transform: scaleY(1)    scaleX(1)    rotateX(0deg)  skewX(0deg);  opacity: 1; }
+  100% { transform: scaleY(0.05) scaleX(0.25) rotateX(60deg) skewX(15deg); opacity: 0; filter: blur(2px); }
+}
+
+/* The origami animation classes — applied to the dropdown card.
+   The parent <div> that wraps the card should have `perspective: 800px`
+   for the 3D rotateX effect to look right. */
+.origami-unfold-in {
+  animation: origamiUnfoldIn 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+.origami-unfold-out {
+  animation: origamiUnfoldOut 280ms ease-in both;
+  transform-origin: top center;
+}
+
+/* Drop the old bubble keyframes — replaced by origamiUnfold. */
+
 
 /* ============================================================
    Geometric patterns (left side, fixed position, after hero)
@@ -411,6 +469,17 @@
   .contact-anim-location,
   .contact-anim-clock {
     animation: none !important;
+  }
+  /* Disable the teardrop and origami dropdown animations — show the
+     dropdown instantly for users who prefer reduced motion. */
+  .cities-teardrop-in,
+  .cities-teardrop-out,
+  .origami-unfold-in,
+  .origami-unfold-out {
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
   }
 }
 

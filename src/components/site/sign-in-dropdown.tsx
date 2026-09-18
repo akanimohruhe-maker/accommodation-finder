@@ -1,139 +1,125 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Loader2 } from "lucide-react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 
 /**
- * SignInDropdown — the "Get started" button reveals a bubble-style dropdown
- * containing the three sign-in methods:
- *   1. Zoho (continue with Zoho account) — redirects to Zoho OAuth consent
- *   2. Email magic link                   — server sends one-time link
- *   3. Username + password                — opens the custom sign-in page
+ * SignInDropdown — "Get started" reveals an origami-unfolding dropdown
+ * containing the brand CTA:
  *
- * The bubble appears below the button with a soft drop-shadow and a small
- * arrow pointing up to the trigger. The dropdown:
+ *   1. A bold "Continue with Zoho Mail" button (the most prominent
+ *      option — bigger icon, bolder border, brand-orange gradient).
+ *   2. An email input field where the user can type their preferred
+ *      email address to receive a magic link.
+ *
+ * Both options sit in a card that unfolds from the button like a
+ * piece of origami paper. The card uses the brand harmonic
+ * white → soft yellow → white vertical gradient. The outer
+ * border + drop-shadow use the brand alternate palette
+ * (orange #FF8C00, yellow #FFC107, gold #F9B43A) so the
+ * teardrop + origami animations stay on-brand.
+ *
+ * Auth integration:
+ *   - "Continue with Zoho Mail"  → signIn("zoho", { callbackUrl })
+ *   - Email input + submit       → POST /api/auth/signin/email
+ *     (sends a one-time magic link to the user's preferred email)
+ *
+ * The dropdown:
  *   - opens on hover AND on click (so touch users can use it)
  *   - closes when the pointer leaves both the button and the bubble
  *   - closes on Escape and on outside click
- *   - animates in with a subtle bubble pop (scale + opacity + slide)
+ *   - animates IN with the origami-unfold keyframe (480ms cubic-bezier)
+ *   - animates OUT with a faster 280ms origami-fold
  *   - keeps open while the focus is anywhere inside the dropdown
- *
- * Per the user's spec, each option uses the bespoke geometric brand
- * visual language (sun-palette stroke icons + warm orange accent button).
- *
- * Auth integration:
- *   - Zoho  → signIn("zoho", { callbackUrl: "/my-account" })
- *   - Email → navigate to /auth/signin?method=email (the form handles send)
- *   - User  → navigate to /auth/signin?method=credentials
- *   - All three land on /my-account after successful sign-in.
+ *   - is disabled under prefers-reduced-motion (instant show)
  */
 
 type Props = {
-  /** If true, the navbar is over a transparent hero — render text in white.
-   *  If false (scrolled state with solid navbar bg), render text in ink. */
+  /** If true, the navbar is over a transparent hero — render the trigger
+   *  button in white-on-dark. If false (scrolled navbar with solid bg),
+   *  render in brand navy. */
   light: boolean;
 };
 
-/** Three small bespoke SVG icons matching the brand geometric style. */
-function ZohoMark({ size = 20 }: { size?: number }) {
-  // Zoho's logo is red, but for our dropdown we use a bespoke geometric
-  // mark — a hexagon with a "Z" inside — in the brand sun palette.
+/**
+ * ZohoMailMark — a bespoke geometric SVG mark for Zoho Mail. We use a
+ * larger, bolder version here than the small dropdown icons used
+ * previously because the user wants Zoho Mail to be the most
+ * prominent option in the CTA.
+ *
+ * The mark combines:
+ *   - An orange hexagon (the Zoho brand shape)
+ *   - A bold "Z" inside (for Zoho)
+ *   - A small envelope flap on the right (for "Mail")
+ * All in the brand alternate palette (orange / yellow / gold).
+ */
+function ZohoMailMark({ size = 32 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      <hexagon />
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 48 48"
+      fill="none"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      {/* Outer hexagon — orange stroke, yellow fill, bolder than the
+          small mark used in the previous dropdown. */}
       <polygon
-        points="16,3 28,10 28,22 16,29 4,22 4,10"
+        points="24,3 42,13 42,35 24,45 6,35 6,13"
         stroke="#FF8C00"
-        strokeWidth="1.6"
+        strokeWidth="2.2"
         fill="#FFC107"
-        fillOpacity="0.18"
+        fillOpacity="0.22"
         strokeLinejoin="round"
       />
-      <path
-        d="M11 11 L21 11 L11 21 L21 21"
-        stroke="#2E3194"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-    </svg>
-  );
-}
-
-function EnvelopeMark({ size = 20 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      <rect
-        x="5" y="9" width="22" height="16" rx="2"
-        stroke="#FF8C00"
-        strokeWidth="1.6"
-        fill="#FFC107"
-        fillOpacity="0.10"
-      />
-      <path
-        d="M5 11 L16 19 L27 11"
+      {/* Inner hexagon ring for a layered, origami-paper feel */}
+      <polygon
+        points="24,9 36,16 36,32 24,39 12,32 12,16"
         stroke="#F9B43A"
-        strokeWidth="1.6"
+        strokeWidth="1.2"
+        fill="none"
+        opacity="0.7"
+      />
+      {/* Bold "Z" mark — the Zoho letter, in brand navy for contrast
+          against the warm yellow fill. */}
+      <path
+        d="M16 18 L32 18 L16 30 L32 30"
+        stroke="#2E3194"
+        strokeWidth="3"
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"
       />
-      <circle cx="27" cy="9" r="3" fill="#FFB700" opacity="0.85" />
-    </svg>
-  );
-}
-
-function KeyMark({ size = 20 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      {/* Key ring */}
-      <circle
-        cx="11" cy="11" r="6"
+      {/* Small envelope flap accent at the bottom-right — signals "Mail" */}
+      <path
+        d="M30 36 L38 36 L34 41 Z"
         stroke="#FF8C00"
-        strokeWidth="1.6"
-        fill="#FFC107"
-        fillOpacity="0.15"
+        strokeWidth="1.5"
+        fill="#FFB700"
+        fillOpacity="0.5"
+        strokeLinejoin="round"
       />
-      <circle cx="11" cy="11" r="2" fill="#F9B43A" />
-      {/* Key shaft and teeth */}
-      <line x1="15" y1="15" x2="27" y2="27" stroke="#FF8C00" strokeWidth="2" strokeLinecap="round" />
-      <line x1="22" y1="22" x2="25" y2="19" stroke="#FF8C00" strokeWidth="2" strokeLinecap="round" />
-      <line x1="25" y1="25" x2="28" y2="22" stroke="#FF8C00" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
 
-const METHODS = [
-  {
-    Icon: ZohoMark,
-    label: "Continue with Zoho",
-    sub: "Sign in with your Zoho account.",
-    // Use the Auth.js v5 client-side signIn helper. This redirects to
-    // /api/auth/signin/zoho which then redirects to Zoho's consent screen.
-    action: () => signIn("zoho", { callbackUrl: "/my-account" }),
-  },
-  {
-    Icon: EnvelopeMark,
-    label: "Continue with email",
-    sub: "We'll send a one-time magic link.",
-    // Open the custom sign-in page with method=email. The page form then
-    // hits /api/auth/signin/email to send the magic link.
-    action: () => {
-      window.location.href = "/auth/signin?method=email&callbackUrl=/my-account";
-    },
-  },
-  {
-    Icon: KeyMark,
-    label: "Sign in with username",
-    sub: "Use your Accommodation Finders account.",
-    action: () => {
-      window.location.href = "/auth/signin?method=credentials&callbackUrl=/my-account";
-    },
-  },
-];
+/**
+ * EnvelopeMark — the small email icon used inside the email input field
+ * area. Kept subtle so the Zoho Mail button stays the most prominent.
+ */
+function EnvelopeMark({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="3" y="6" width="18" height="13" rx="2"
+        stroke="#FF8C00" strokeWidth="1.5" fill="#FFC107" fillOpacity="0.08" />
+      <path d="M3 8 L12 14 L21 8"
+        stroke="#F9B43A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    </svg>
+  );
+}
 
 export function SignInDropdown({ light }: Props) {
   const [open, setOpen] = useState(false);
@@ -141,25 +127,28 @@ export function SignInDropdown({ light }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Email magic-link form state
+  const [email, setEmail] = useState("");
+  const [sending, setSending] = useState(false);
+  const [emailInfo, setEmailInfo] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
+
   const openNow = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
     setClosing(false);
     setOpen(true);
   };
   const scheduleClose = () => {
-    // Small delay so the user can move the pointer from the button to the
-    // bubble without the bubble disappearing mid-move.
     if (closeTimer.current) clearTimeout(closeTimer.current);
     closeTimer.current = setTimeout(() => {
       setClosing(true);
       setTimeout(() => {
         setOpen(false);
         setClosing(false);
-      }, 180);
+      }, 280);
     }, 220);
   };
 
-  // Close on Escape and on outside click
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -183,9 +172,52 @@ export function SignInDropdown({ light }: Props) {
     };
   }, [open]);
 
-  // The trigger button colors depend on whether the navbar is transparent
-  // (over the hero) or solid (scrolled). On transparent hero, the brand
-  // button stays the navy with white text — already high-contrast.
+  /** Submit the email magic-link form. Hits the Auth.js v5
+   *  /api/auth/signin/email endpoint with the user's preferred email. */
+  const sendMagicLink = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setEmailError(null);
+    setEmailInfo(null);
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setEmailError("Please enter a valid email address.");
+      return;
+    }
+    setSending(true);
+    try {
+      // Get CSRF token first (Auth.js v5 requires it on POST)
+      const csrfRes = await fetch("/api/auth/csrf");
+      const csrfData = await csrfRes.json();
+      const csrfToken = csrfData.csrfToken as string;
+
+      const res = await fetch("/api/auth/signin/email", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          email,
+          csrfToken,
+          callbackUrl: window.location.origin + "/my-account",
+        }).toString(),
+      });
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || "Failed to send magic link");
+      }
+      setEmailInfo(`Magic link sent to ${email}. Check your inbox.`);
+      setEmail("");
+    } catch (err) {
+      setEmailError(err instanceof Error ? err.message : "Unknown error");
+    } finally {
+      setSending(false);
+    }
+  };
+
+  /** Trigger the Zoho OAuth flow. */
+  const signInWithZoho = () => {
+    setOpen(false);
+    setClosing(false);
+    signIn("zoho", { callbackUrl: "/my-account" });
+  };
+
   const buttonBase = light
     ? "bg-white/10 text-white hover:bg-white/15 backdrop-blur-sm border border-white/20"
     : "bg-brand text-brand-foreground hover:bg-brand-soft border border-brand";
@@ -198,7 +230,6 @@ export function SignInDropdown({ light }: Props) {
       onMouseLeave={scheduleClose}
       onFocus={openNow}
       onBlur={(e) => {
-        // If focus leaves the whole container, close
         if (!e.currentTarget.contains(e.relatedTarget as Node)) scheduleClose();
       }}
     >
@@ -218,77 +249,158 @@ export function SignInDropdown({ light }: Props) {
         />
       </button>
 
-      {/* Bubble dropdown */}
+      {/* Origami-unfolding dropdown card */}
       {open && (
         <div
           role="menu"
           aria-label="Sign in"
-          className={`absolute right-0 top-full pt-3 z-50 w-[320px] sm:w-[360px] ${
-            closing ? "animate-[signInBubbleOut_180ms_ease-in_forwards]" : "animate-[signInBubbleIn_280s_ease-out_forwards]"
-          }`}
+          className="absolute right-0 top-full pt-3 z-50 w-[340px] sm:w-[380px]"
+          style={{ perspective: "800px" }}
         >
-          {/* The bubble — rounded card with a small upward arrow */}
-          <div className="relative bg-bg-elevated border border-line rounded-2xl shadow-[0_18px_50px_-12px_rgba(15,23,42,0.25)] p-2 overflow-hidden">
-            {/* Small upward arrow centered under the trigger */}
+          {/* The outer wrapper applies the origami animation + the brand-
+              alternate gradient border. The inner card uses the brand
+              harmonic white → soft-yellow → white vertical gradient so
+              the card stays in the same color family as the navbar
+              (no color clash). */}
+          <div
+            className={`rounded-[20px] p-[1.5px] shadow-[0_18px_50px_-12px_rgba(255,140,0,0.32)] ${
+              closing ? "origami-unfold-out" : "origami-unfold-in"
+            }`}
+            style={{
+              background:
+                "linear-gradient(135deg, #FF8C00 0%, #FFC107 50%, #F9B43A 100%)",
+            }}
+          >
             <div
-              aria-hidden="true"
-              className="absolute -top-1.5 right-7 h-3 w-3 rotate-45 bg-bg-elevated border-l border-t border-line"
-            />
+              className="relative rounded-[18px] overflow-hidden"
+              style={{
+                background:
+                  "linear-gradient(180deg, #FFFFFF 0%, #FFF8E8 50%, #FFFFFF 100%)",
+              }}
+            >
+              {/* Small origami-fold arrow pointing up at the trigger button.
+                  Filled with the brand-alternate gradient. */}
+              <div
+                aria-hidden="true"
+                className="absolute -top-1.5 right-7 h-3 w-3 rotate-45"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #FF8C00 0%, #FFC107 100%)",
+                }}
+              />
 
-            {/* Header inside the bubble */}
-            <div className="px-3 py-3 border-b border-line">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand">
-                Sign in to your account
-              </p>
-              <p className="mt-1 text-[13px] text-ink-soft leading-relaxed">
-                Pick a method below — all three connect to the same account.
-              </p>
-            </div>
+              {/* Header inside the card */}
+              <div className="px-5 pt-4 pb-3 border-b border-sun-1/15">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand">
+                  Sign in to your account
+                </p>
+                <p className="mt-1 text-[13px] text-ink-soft leading-relaxed">
+                  Pick a method below — both connect to the same account.
+                </p>
+              </div>
 
-            {/* Method list */}
-            <ul className="py-1.5" role="none">
-              {METHODS.map((m) => (
-                <li key={m.label} role="none">
-                  <button
-                    type="button"
-                    role="menuitem"
-                    onClick={() => {
-                      // Close the dropdown before triggering the sign-in
-                      // flow so the user doesn't see a stale bubble if
-                      // they navigate back.
-                      setOpen(false);
-                      setClosing(false);
-                      m.action();
-                    }}
-                    className="group w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-brand/4 transition-colors text-left"
-                  >
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-sun-1/10 to-sun-2/10 border border-sun-1/20 shrink-0 group-hover:from-sun-1/20 group-hover:to-sun-2/20 transition-colors">
-                      <m.Icon size={20} />
-                    </span>
-                    <span className="flex flex-col">
-                      <span className="text-[14px] font-medium text-ink leading-tight">
-                        {m.label}
-                      </span>
-                      <span className="text-[12px] text-ink-muted mt-0.5">
-                        {m.sub}
-                      </span>
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-
-            {/* Footer */}
-            <div className="px-3 py-2.5 border-t border-line">
-              <p className="text-[11.5px] text-ink-muted">
-                New here?{" "}
-                <Link
-                  href="/find-accommodation"
-                  className="font-medium text-brand hover:text-brand-soft transition-colors"
+              {/* Primary CTA — Continue with Zoho Mail (bold + prominent) */}
+              <div className="px-3 pt-3 pb-2">
+                <button
+                  type="button"
+                  onClick={signInWithZoho}
+                  className="group w-full inline-flex items-center gap-3.5 px-4 py-3.5 rounded-2xl border-2 border-sun-1 hover:border-sun-1/70 transition-colors text-left shadow-[0_8px_24px_-8px_rgba(255,140,0,0.35)]"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #FFF8E8 0%, #FFE9B8 100%)",
+                  }}
                 >
-                  Browse verified properties →
-                </Link>
-              </p>
+                  {/* Bigger, bolder Zoho Mail icon (32px vs 20px) */}
+                  <span
+                    className="inline-flex h-14 w-14 items-center justify-center rounded-2xl shrink-0 group-hover:scale-105 transition-transform"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #FFC107 0%, #FF8C00 100%)",
+                      boxShadow:
+                        "0 4px 14px -4px rgba(255,140,0,0.5), inset 0 1px 0 rgba(255,255,255,0.4)",
+                    }}
+                  >
+                    <ZohoMailMark size={32} />
+                  </span>
+                  <span className="flex flex-col flex-1">
+                    <span className="text-[15.5px] font-bold text-ink leading-tight">
+                      Continue with Zoho Mail
+                    </span>
+                    <span className="text-[12.5px] text-ink-soft mt-0.5">
+                      Recommended — sign in with your Zoho Mail account.
+                    </span>
+                  </span>
+                  {/* Small arrow indicator */}
+                  <ChevronDown
+                    className="h-4 w-4 text-sun-1 -rotate-90 group-hover:translate-x-0.5 transition-transform shrink-0"
+                  />
+                </button>
+              </div>
+
+              {/* Divider */}
+              <div className="px-5 py-2 flex items-center gap-3">
+                <div className="flex-1 h-px bg-sun-1/15" />
+                <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-ink-muted">
+                  or
+                </span>
+                <div className="flex-1 h-px bg-sun-1/15" />
+              </div>
+
+              {/* Email input field — for the user's preferred email */}
+              <form onSubmit={sendMagicLink} className="px-3 pt-1 pb-3">
+                <label className="block">
+                  <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-muted block mb-1.5 px-1">
+                    <EnvelopeMark size={14} />
+                    Enter your preferred email
+                  </span>
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    className="w-full h-11 rounded-xl border border-sun-1/25 bg-white px-3.5 text-[14px] text-ink placeholder:text-ink-muted/60 focus:outline-none focus:border-sun-1 focus:ring-2 focus:ring-sun-1/15 transition-colors"
+                  />
+                </label>
+                {emailError && (
+                  <p className="mt-2 px-1 text-[12px] text-danger">
+                    {emailError}
+                  </p>
+                )}
+                {emailInfo && (
+                  <p className="mt-2 px-1 text-[12px] text-success">
+                    {emailInfo}
+                  </p>
+                )}
+                <button
+                  type="submit"
+                  disabled={sending}
+                  className="mt-3 w-full inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-[13.5px] font-semibold transition-colors disabled:opacity-60"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #FF8C00 0%, #FFB700 100%)",
+                    color: "#1A1407",
+                    boxShadow:
+                      "0 4px 14px -4px rgba(255,140,0,0.4)",
+                  }}
+                >
+                  {sending && <Loader2 className="h-4 w-4 animate-spin" />}
+                  {sending ? "Sending magic link..." : "Send magic link"}
+                </button>
+              </form>
+
+              {/* Footer */}
+              <div className="px-5 py-3 border-t border-sun-1/15 bg-white/40">
+                <p className="text-[11.5px] text-ink-muted">
+                  New here?{" "}
+                  <Link
+                    href="/find-accommodation"
+                    className="font-semibold text-sun-1 hover:text-sun-1/80 transition-colors"
+                  >
+                    Browse verified properties →
+                  </Link>
+                </p>
+              </div>
             </div>
           </div>
         </div>
